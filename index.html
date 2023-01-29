@@ -26,17 +26,24 @@
     </audio>
 
     <audio loop id="music-audio">
-      <source src="audio/ambience-music.mp3" type="audio/mp3" />
+      <source id="music-source" type="audio/mp3" />
     </audio>
 
     <script>
+      const NUM_OF_SONGS = 3;
+
       const rain = document.getElementById("rain-audio");
       const music = document.getElementById("music-audio");
+      const musicSource = document.getElementById("music-source");
+
+      // pick a random background song to play
+      const trackNum = Math.floor(Math.random() * NUM_OF_SONGS);
+      musicSource.src = `audio/ambience-music-${trackNum}.mp3`;
 
       const audioButton = document.getElementById("sound-control");
 
-      rain.volume = 0.15;
-      music.volume = 0.7;
+      rain.volume = 0.1;
+      music.volume = 0.6;
 
       let playing = false;
       function toggleAudio() {
