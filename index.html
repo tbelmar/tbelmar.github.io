@@ -14,6 +14,52 @@
       <p class="job-title">Software Developer</p>
     </div>
 
+    <img
+      class="sound-control"
+      id="sound-control"
+      onclick="toggleAudio()"
+      src="images/mute_icon_white.png"
+    />
+
+    <audio loop id="rain-audio">
+      <source src="audio/light-rain.mp3" type="audio/mp3" />
+    </audio>
+
+    <audio loop id="music-audio">
+      <source src="audio/ambience-music.mp3" type="audio/mp3" />
+    </audio>
+
+    <script>
+      const rain = document.getElementById("rain-audio");
+      const music = document.getElementById("music-audio");
+
+      const audioButton = document.getElementById("sound-control");
+
+      rain.volume = 0.15;
+      music.volume = 0.7;
+
+      let playing = false;
+      function toggleAudio() {
+        if (!playing) {
+          playing = true;
+
+          rain.muted = false;
+          music.muted = false;
+
+          audioButton.src = "images/sound_icon_white.png";
+
+          rain.play();
+          music.play();
+        } else {
+          playing = false;
+          rain.muted = true;
+          music.muted = true;
+
+          audioButton.src = "images/mute_icon_white.png";
+        }
+      }
+    </script>
+
     <style>
       @font-face {
         font-family: edunline;
@@ -69,6 +115,13 @@
         font-size: 20px;
         letter-spacing: 1px;
         margin-bottom: 20px;
+      }
+
+      .sound-control {
+        display: inline-block;
+        position: fixed;
+        bottom: 15px;
+        left: 15px;
       }
     </style>
   </body>
