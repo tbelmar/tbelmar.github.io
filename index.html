@@ -20,6 +20,16 @@
         src: url("fonts/Hachicro.ttf");
       }
 
+      @font-face {
+        font-family: edunline;
+        src: url("fonts/edunline.ttf");
+      }
+
+      @font-face {
+        font-family: o4b;
+        src: url("fonts/o4b.ttf");
+      }
+
       body {
         background-image: url("images/background.gif");
         background-position: right;
@@ -29,31 +39,41 @@
         overflow: hidden;
         top: -10%;
         padding: 5px;
-        font-family: hachicro;
+        font-family: edunline;
+        text-align: center;
       }
 
       .info-container {
+        display: inline-block;
         text-align: center;
-        background-color: rgb(64, 34, 45, 0.7);
-        border-radius: 10px;
         border-style: solid;
+        border-color: #351c24;
         user-select: none;
+        background-color: rgb(64, 34, 45, 0.9);
+        border-radius: 10px;
+        padding: 0px 40px 0px 40px;
+        margin-top: 10px;
       }
 
       .name {
         color: #d8d9ba;
         text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
           5px 5px 0 #000;
-        font-size: 35px;
-        line-height: 50px;
+        font-size: 55px;
+        margin-top: 20px;
         margin-bottom: -10px;
+        line-height: 55px;
+        letter-spacing: 3px;
       }
 
       .job-title {
+        font-family: o4b;
         color: #d8d9ba;
         text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
           1px 1px 0 #000;
-        font-size: 15px;
+        font-size: 20px;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
       }
     </style>
   </body>
