@@ -3,9 +3,23 @@
   <head>
     <title>Tomás Belmar - Software Engineer</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.png" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
   </head>
   <body>
+    <div class="info-container">
+      <h1 class="name">TOMÁS BELMAR</h1>
+      <p class="job-title">Software Developer</p>
+    </div>
+
     <style>
+      @font-face {
+        font-family: hachicro;
+        src: url("fonts/Hachicro.ttf");
+      }
+
       body {
         background-image: url("images/background.gif");
         background-position: right;
@@ -14,6 +28,26 @@
         height: 100vh;
         overflow: hidden;
         top: -10%;
+        padding: 5px;
+        font-family: hachicro;
+      }
+
+      .info-container {
+        text-align: center;
+        background-color: rgb(64, 34, 45, 0.9);
+        border-radius: 10px;
+        border-style: solid;
+      }
+
+      .name {
+        color: #d8d9ba;
+        font-size: 35px;
+        margin-bottom: -20px;
+      }
+
+      .job-title {
+        color: #d8d9ba;
+        font-size: 15px;
       }
     </style>
   </body>
