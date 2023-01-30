@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Tomás Belmar - Software Engineer</title>
+    <title>Tomás Belmar | Software Engineer</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.png" />
     <meta
       name="viewport"
@@ -35,12 +35,11 @@
       const rain = document.getElementById("rain-audio");
       const music = document.getElementById("music-audio");
       const musicSource = document.getElementById("music-source");
+      const audioButton = document.getElementById("sound-control");
 
       // pick a random background song to play
       const trackNum = Math.floor(Math.random() * NUM_OF_SONGS);
       musicSource.src = `audio/ambience-music-${trackNum}.mp3`;
-
-      const audioButton = document.getElementById("sound-control");
 
       rain.volume = 0.1;
       music.volume = 0.6;
@@ -95,12 +94,7 @@
         display: inline-block;
         text-align: center;
         user-select: none;
-        padding: 0px 40px 0px 40px;
         margin-top: 10px;
-        border-style: solid;
-        border-color: #351c24;
-        background-color: rgb(64, 34, 45, 0.9);
-        border-radius: 10px;
       }
 
       .name {
@@ -108,20 +102,25 @@
         text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
           5px 5px 0 #000;
         font-size: 55px;
-        margin-top: 20px;
+        margin-top: 10px;
         margin-bottom: -10px;
         line-height: 55px;
         letter-spacing: 3px;
       }
 
       .job-title {
+        display: inline-block;
         font-family: o4b;
         color: #d8d9ba;
         text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
           1px 1px 0 #000;
         font-size: 20px;
         letter-spacing: 1px;
-        margin-bottom: 20px;
+        border-style: solid;
+        border-color: #351c24;
+        background-color: rgb(141, 74, 60, 1);
+        border-radius: 10px;
+        padding: 5px 10px 3px 10px;
       }
 
       .sound-control {
