@@ -20,6 +20,9 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"pixi.js": "^7.1.4"
+		"@pixi/gif": "^2.1.0",
+		"pixi.js": "^7.1.4",
+		"prettier": "^2.8.4",
+		"prettier-plugin-svelte": "^2.9.0"
 	}
 }
