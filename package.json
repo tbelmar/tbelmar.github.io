@@ -1,28 +1,29 @@
 {
-	"name": "tbelmar.github.io",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/kit": "^1.5.0",
-		"svelte": "^3.54.0",
-		"svelte-check": "^3.0.1",
-		"tslib": "^2.4.1",
-		"typescript": "^4.9.3",
-		"vite": "^4.0.0"
-	},
-	"type": "module",
-	"dependencies": {
-		"@pixi/gif": "^2.1.0",
-		"pixi.js": "^7.1.4",
-		"prettier": "^2.8.4",
-		"prettier-plugin-svelte": "^2.9.0"
-	}
+    "name": "tbelmar.github.io",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "vite dev",
+        "dev": "vite dev",
+        "build": "vite build",
+        "preview": "vite preview",
+        "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+        "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+    },
+    "devDependencies": {
+        "@sveltejs/adapter-auto": "^2.0.0",
+        "@sveltejs/kit": "^1.5.0",
+        "svelte": "^3.54.0",
+        "svelte-check": "^3.0.1",
+        "tslib": "^2.4.1",
+        "typescript": "^4.9.3",
+        "vite": "^4.0.0"
+    },
+    "type": "module",
+    "dependencies": {
+        "@pixi/gif": "^2.1.0",
+        "pixi.js": "^7.1.4",
+        "prettier": "^2.8.4",
+        "prettier-plugin-svelte": "^2.9.0"
+    }
 }
