@@ -53,6 +53,9 @@
 
     let isHoveringOverCharacter = false;
 
+    let loadText;
+    let loadPercentage = 0;
+
     $: {
         if (canvas) {
             canvas.style!.cursor = isHoveringOverCharacter
@@ -61,9 +64,15 @@
         }
     }
 
+    $: {
+        if (loadPercentage === 100) loadText.remove();
+    }
+
     const loadSprites = async () => {
         // load all sprites
+        loadPercentage = 0;
         background = await loadAnimatedSprite('bg-non-interactive', 64);
+        loadPercentage = 5;
         background.interactive = true;
 
         background.on('click', (e) => {
@@ -72,35 +81,54 @@
         });
 
         belmarDefault = await loadAnimatedSprite('bigbelmar-default', 64);
+        loadPercentage = 10;
         belmarLook = await loadAnimatedSprite('bigbelmar-look', 34);
+        loadPercentage = 15;
         belmarTransitionOut = await loadAnimatedSprite(
             'bigbelmar-transition-out',
             4
         );
+        loadPercentage = 20;
         belmarWave = await loadAnimatedSprite('bigbelmar-wave', 13);
+        loadPercentage = 25;
 
         belmarContainer.addChild(belmarDefault);
 
         lightStrip = await loadAnimatedSprite('light-strip', 6);
+        loadPercentage = 30;
         purplePlant = await loadAnimatedSprite('purple-plant', 8);
+        loadPercentage = 35;
         speakerLeft = await loadAnimatedSprite('speaker-left', 5);
+        loadPercentage = 40;
         speakerRight = await loadAnimatedSprite('speaker-right', 5);
+        loadPercentage = 45;
 
         bike = await loadAnimatedSprite('bike', 12);
+        loadPercentage = 50;
         flag = await loadAnimatedSprite('flag', 11);
+        loadPercentage = 55;
         knight = await loadAnimatedSprite('knight', 10);
+        loadPercentage = 60;
         steve = await loadAnimatedSprite('steve', 5);
+        loadPercentage = 65;
         flowerPlant = await loadAnimatedSprite('plant-flowers', 11);
+        loadPercentage = 70;
         tallPlant = await loadAnimatedSprite('plant-tall', 12);
+        loadPercentage = 75;
         shortPlant = await loadAnimatedSprite('plant-short', 10);
+        loadPercentage = 80;
         viola = await loadAnimatedSprite('viola', 7);
+        loadPercentage = 85;
 
         smallShelfFlower = await loadAnimatedSprite('small-shelf-flower', 4);
+        loadPercentage = 90;
         smallShelfPlant = await loadAnimatedSprite('small-shelf-plant', 5);
+        loadPercentage = 95;
         smallShelfPeashooter = await loadAnimatedSprite(
             'small-shelf-peashooter',
             7
         );
+        loadPercentage = 100;
 
         downwardsArrow = new Sprite(
             await Texture.from('images/downwards-arrow.png')
@@ -506,6 +534,20 @@
 
 <div id="body">
     <Header />
+
+    <h1
+        bind:this={loadText}
+        style="position: absolute; left: 50%; transform: translate(-50%, 0); font-family: o4b; text-align: center"
+    >
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        Loading...
+        <br />
+        {loadPercentage}%
+    </h1>
 
     <div class="app">
         <canvas bind:this={canvas} />
