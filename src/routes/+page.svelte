@@ -29,6 +29,15 @@
     let speakerLeft: AnimatedSprite;
     let speakerRight: AnimatedSprite;
 
+    let bike: AnimatedSprite;
+    let flag: AnimatedSprite;
+    let knight: AnimatedSprite;
+    let steve: AnimatedSprite;
+    let flowerPlant: AnimatedSprite;
+    let tallPlant: AnimatedSprite;
+    let shortPlant: AnimatedSprite;
+    let viola: AnimatedSprite;
+
     let isHoveringOverCharacter = false;
 
     $: {
@@ -62,6 +71,15 @@
         speakerLeft = await loadAnimatedSprite('speaker-left', 5);
         speakerRight = await loadAnimatedSprite('speaker-right', 5);
 
+        bike = await loadAnimatedSprite('bike', 12);
+        flag = await loadAnimatedSprite('flag', 11);
+        knight = await loadAnimatedSprite('knight', 10);
+        steve = await loadAnimatedSprite('steve', 5);
+        flowerPlant = await loadAnimatedSprite('plant-flowers', 11);
+        tallPlant = await loadAnimatedSprite('plant-tall', 12);
+        shortPlant = await loadAnimatedSprite('plant-short', 10);
+        viola = await loadAnimatedSprite('viola', 7);
+
         sprites = [
             ...sprites,
             background,
@@ -72,7 +90,15 @@
             lightStrip,
             purplePlant,
             speakerLeft,
-            speakerRight
+            speakerRight,
+            bike,
+            flag,
+            knight,
+            steve,
+            flowerPlant,
+            tallPlant,
+            shortPlant,
+            viola
         ];
     };
 
@@ -99,6 +125,93 @@
 
         drawScene();
     });
+
+    const setupFloorItems = () => {
+        bike.pivot.set(1182, -373);
+        bike.interactive = true;
+        bike.loop = false;
+        bike.animationSpeed = 1;
+        bike.onmouseover = () => {
+            bike.gotoAndPlay(0);
+        };
+        bike.onmouseleave = () => {
+            bike.gotoAndStop(0);
+        };
+    };
+
+    const setupWall = () => {
+        flag.pivot.set(678, -330);
+        flag.interactive = true;
+        flag.loop = false;
+        flag.animationSpeed = 0.3;
+        flag.onmouseover = () => {
+            flag.gotoAndPlay(0);
+        };
+        flag.onComplete = () => {
+            flag.gotoAndStop(0);
+        };
+
+        viola.pivot.set(704, -176);
+        viola.interactive = true;
+        viola.loop = false;
+        viola.animationSpeed = 0.3;
+        viola.onmouseover = () => {
+            viola.gotoAndPlay(0);
+        };
+        viola.onComplete = () => {
+            viola.gotoAndStop(0);
+        };
+    };
+
+    const setupSmallShelf = () => {};
+
+    const setupBed = () => {
+        steve.pivot.set(660, -456);
+        steve.interactive = true;
+        steve.loop = false;
+        steve.animationSpeed = 0.3;
+        steve.onmouseover = () => {
+            steve.gotoAndPlay(0);
+        };
+        steve.onComplete = () => {
+            steve.gotoAndStop(0);
+        };
+
+        knight.pivot.set(756, -492);
+        knight.interactive = true;
+        knight.loop = false;
+        knight.animationSpeed = 0.2;
+        knight.onmouseover = () => {
+            knight.gotoAndPlay(0);
+        };
+        knight.onComplete = () => {
+            knight.gotoAndStop(0);
+        };
+    };
+
+    const setupPlants = () => {
+        shortPlant.pivot.set(1050, -432);
+        shortPlant.interactive = true;
+        shortPlant.loop = false;
+        shortPlant.animationSpeed = 0.3;
+        shortPlant.onmouseover = () => {
+            shortPlant.gotoAndPlay(0);
+        };
+        shortPlant.onComplete = () => {
+            shortPlant.gotoAndStop(0);
+        };
+
+        flowerPlant.pivot.set(-1, -690);
+        flowerPlant.interactive = true;
+        flowerPlant.loop = false;
+        flowerPlant.animationSpeed = 0.3;
+        flowerPlant.onmouseover = () => {
+            flowerPlant.gotoAndPlay(0);
+        };
+        flowerPlant.onComplete = () => {
+            flowerPlant.gotoAndStop(0);
+        };
+    };
 
     const setupRightShelf = () => {
         purplePlant.pivot.set(96, -286);
@@ -249,6 +362,10 @@
 
         await setupBelmar();
         await setupRightShelf();
+        await setupFloorItems();
+        await setupWall();
+        await setupBed();
+        await setupPlants();
 
         background.play();
 
@@ -258,6 +375,14 @@
         app.stage.addChild(speakerLeft);
         app.stage.addChild(speakerRight);
         app.stage.addChild(lightStrip);
+        app.stage.addChild(bike);
+        app.stage.addChild(flag);
+        app.stage.addChild(knight);
+        app.stage.addChild(steve);
+        app.stage.addChild(flowerPlant);
+        app.stage.addChild(tallPlant);
+        app.stage.addChild(shortPlant);
+        app.stage.addChild(viola);
     };
 </script>
 
