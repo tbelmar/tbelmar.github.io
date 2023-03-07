@@ -448,6 +448,8 @@
 
             belmarLook.gotoAndPlay(0);
             belmarContainer.addChild(belmarLook);
+
+            fadeOut(downwardsArrow);
         });
     };
 
