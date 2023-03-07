@@ -3,8 +3,8 @@
     "version": "0.0.1",
     "private": true,
     "scripts": {
-        "start": "npx vite dev --port $PORT",
-        "dev": "npx vite dev --port $PORT",
+        "start": "npx vite dev",
+        "dev": "npx vite dev",
         "build": "npx vite build",
         "preview": "vite preview",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
