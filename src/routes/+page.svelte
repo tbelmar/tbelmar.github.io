@@ -1,6 +1,14 @@
 <script lang="ts">
     import {onMount} from 'svelte';
-    import {AnimatedSprite, Application, Circle, type ICanvas} from 'pixi.js';
+    import {
+        AnimatedSprite,
+        Application,
+        Circle,
+        Graphics,
+        Rectangle,
+        type ICanvas
+    } from 'pixi.js';
+
     import {loadAnimatedSprite} from '../lib/helpers.js';
     import Header from '$lib/components/Header.svelte';
 
@@ -16,6 +24,14 @@
     let belmarWave: AnimatedSprite;
 
     let isHoveringOverCharacter = false;
+
+    $: {
+        if (canvas) {
+            canvas.style!.cursor = isHoveringOverCharacter
+                ? 'pointer'
+                : 'default';
+        }
+    }
 
     onMount(async () => {
         app = new Application({
@@ -50,6 +66,11 @@
             4
         );
         belmarWave = await loadAnimatedSprite('bigbelmar-wave', 13);
+
+        belmarDefault.hitArea = new Rectangle(-380, 100, 200, 300);
+        belmarLook.hitArea = new Rectangle(-380, 100, 200, 300);
+        belmarTransitionOut.hitArea = new Rectangle(-380, 100, 200, 300);
+        belmarWave.hitArea = new Rectangle(-380, 100, 200, 300);
 
         let scale = 1;
 
@@ -96,6 +117,7 @@
             app.stage.removeChild(belmarLook);
             belmarTransitionOut.gotoAndPlay(0);
             app.stage.addChild(belmarTransitionOut);
+            isHoveringOverCharacter = false;
         };
 
         belmarLook.onclick = () => {
@@ -103,6 +125,14 @@
             belmarWave.gotoAndPlay(0);
             isHoveringOverCharacter = true;
             app.stage.addChild(belmarWave);
+        };
+
+        belmarLook.onmouseover = () => {
+            isHoveringOverCharacter = true;
+        };
+
+        belmarDefault.onmouseout = () => {
+            isHoveringOverCharacter = false;
         };
 
         belmarWave.onComplete = () => {
@@ -149,10 +179,12 @@
     };
 </script>
 
-<Header />
+<div>
+    <Header />
 
-<div class="app">
-    <canvas bind:this={canvas} />
+    <div class="app">
+        <canvas bind:this={canvas} />
+    </div>
 </div>
 
 <style>

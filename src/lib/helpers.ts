@@ -11,6 +11,7 @@ export async function loadAnimatedSprite(
             let texture = await Texture.fromURL(
                 `animations/${name}/${name}${i}.png`
             );
+
             frames.push(texture);
         }
     } catch (err) {
