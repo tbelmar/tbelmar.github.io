@@ -181,7 +181,7 @@
     };
 </script>
 
-<div>
+<div id="body">
     <Header />
 
     <div class="app">
@@ -190,4 +190,16 @@
 </div>
 
 <style>
+    #body {
+        background-image: url('images/background.gif');
+        background-position: right;
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100vh;
+        overflow: hidden;
+        top: -10%;
+        padding: 5px;
+        font-family: edunline;
+        text-align: center;
+    }
 </style>
