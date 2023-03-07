@@ -34,6 +34,15 @@
     }
 
     onMount(async () => {
+        background = await loadAnimatedSprite('background-no-belmar', 64);
+        belmarDefault = await loadAnimatedSprite('bigbelmar-default', 64);
+        belmarLook = await loadAnimatedSprite('bigbelmar-look', 34);
+        belmarTransitionOut = await loadAnimatedSprite(
+            'bigbelmar-transition-out',
+            4
+        );
+        belmarWave = await loadAnimatedSprite('bigbelmar-wave', 13);
+
         app = new Application({
             width: window.innerWidth,
             height: window.innerHeight,
@@ -58,14 +67,7 @@
     const drawScene = async () => {
         app.stage.removeChildren();
 
-        background = await loadAnimatedSprite('background-no-belmar', 64);
-        belmarDefault = await loadAnimatedSprite('bigbelmar-default', 64);
-        belmarLook = await loadAnimatedSprite('bigbelmar-look', 34);
-        belmarTransitionOut = await loadAnimatedSprite(
-            'bigbelmar-transition-out',
-            4
-        );
-        belmarWave = await loadAnimatedSprite('bigbelmar-wave', 13);
+        console.log('drawing scene');
 
         belmarDefault.hitArea = new Rectangle(-380, 100, 200, 300);
         belmarLook.hitArea = new Rectangle(-380, 100, 200, 300);
