@@ -15,13 +15,19 @@
     let canvas: ICanvas;
     let app: Application;
 
-    let objects: Array<AnimatedSprite> = [];
+    let sprites: Array<AnimatedSprite> = [];
 
     let background: AnimatedSprite;
+
     let belmarDefault: AnimatedSprite;
     let belmarLook: AnimatedSprite;
     let belmarTransitionOut: AnimatedSprite;
     let belmarWave: AnimatedSprite;
+
+    let lightStrip: AnimatedSprite;
+    let purplePlant: AnimatedSprite;
+    let speakerLeft: AnimatedSprite;
+    let speakerRight: AnimatedSprite;
 
     let isHoveringOverCharacter = false;
 
@@ -33,8 +39,16 @@
         }
     }
 
-    onMount(async () => {
-        background = await loadAnimatedSprite('background-no-belmar', 64);
+    const loadSprites = async () => {
+        // load all sprites
+        background = await loadAnimatedSprite('bg-non-interactive', 64);
+        background.interactive = true;
+
+        background.on('click', (e) => {
+            console.log('First:');
+            console.log(background.toLocal(e.data.global));
+        });
+
         belmarDefault = await loadAnimatedSprite('bigbelmar-default', 64);
         belmarLook = await loadAnimatedSprite('bigbelmar-look', 34);
         belmarTransitionOut = await loadAnimatedSprite(
@@ -42,6 +56,28 @@
             4
         );
         belmarWave = await loadAnimatedSprite('bigbelmar-wave', 13);
+
+        lightStrip = await loadAnimatedSprite('light-strip', 6);
+        purplePlant = await loadAnimatedSprite('purple-plant', 8);
+        speakerLeft = await loadAnimatedSprite('speaker-left', 5);
+        speakerRight = await loadAnimatedSprite('speaker-right', 5);
+
+        sprites = [
+            ...sprites,
+            background,
+            belmarDefault,
+            belmarLook,
+            belmarTransitionOut,
+            belmarWave,
+            lightStrip,
+            purplePlant,
+            speakerLeft,
+            speakerRight
+        ];
+    };
+
+    onMount(async () => {
+        await loadSprites();
 
         app = new Application({
             width: window.innerWidth,
@@ -64,54 +100,72 @@
         drawScene();
     });
 
-    const drawScene = async () => {
-        app.stage.removeChildren();
+    const setupRightShelf = () => {
+        purplePlant.pivot.set(96, -286);
+        purplePlant.interactive = true;
+        purplePlant.loop = false;
+        purplePlant.animationSpeed = 0.3;
+        purplePlant.onmouseover = () => {
+            purplePlant.gotoAndPlay(0);
+        };
+        purplePlant.onComplete = () => {
+            purplePlant.gotoAndStop(0);
+        };
 
-        console.log('drawing scene');
+        lightStrip.hitArea = new Rectangle(-320, -20, 120, 120);
+        lightStrip.pivot.set(-24, -330);
+        lightStrip.interactive = true;
+        lightStrip.loop = false;
+        lightStrip.animationSpeed = 0.3;
+        lightStrip.onmouseover = () => {
+            lightStrip.gotoAndPlay(0);
+        };
+        lightStrip.onComplete = () => {
+            lightStrip.gotoAndStop(0);
+        };
 
-        belmarDefault.hitArea = new Rectangle(-380, 100, 200, 300);
-        belmarLook.hitArea = new Rectangle(-380, 100, 200, 300);
-        belmarTransitionOut.hitArea = new Rectangle(-380, 100, 200, 300);
-        belmarWave.hitArea = new Rectangle(-380, 100, 200, 300);
+        speakerLeft.pivot.set(109, -378);
+        speakerLeft.interactive = true;
+        speakerLeft.loop = false;
+        speakerLeft.onmouseover = () => {
+            speakerLeft.gotoAndPlay(0);
+        };
+        speakerLeft.onComplete = () => {
+            speakerLeft.gotoAndStop(0);
+        };
 
-        let scale = 1;
+        speakerRight.pivot.set(-18, -462);
+        speakerRight.interactive = true;
+        speakerRight.loop = false;
+        speakerRight.onmouseover = () => {
+            speakerRight.gotoAndPlay(0);
+        };
+        speakerRight.onComplete = () => {
+            speakerRight.gotoAndStop(0);
+        };
+    };
 
-        scale = window.innerHeight / background.height;
+    const setupBelmar = () => {
+        const belmarDimensions = new Rectangle(-380, 100, 200, 300);
 
-        background.animationSpeed = 0.2;
-        background.anchor.set(1, 0);
-        background.position.set(app.renderer.width, 0);
-        background.play();
-        background.scale.set(scale, scale);
+        belmarDefault.hitArea = belmarDimensions;
+        belmarLook.hitArea = belmarDimensions;
+        belmarTransitionOut.hitArea = belmarDimensions;
+        belmarWave.hitArea = belmarDimensions;
+
+        belmarDefault.pivot.set(37, -390);
+        belmarLook.pivot.set(37, -390);
+        belmarTransitionOut.pivot.set(37, -390);
+        belmarWave.pivot.set(37, -390);
 
         belmarDefault.interactive = true;
-        belmarDefault.animationSpeed = 0.2;
-        belmarDefault.anchor.set(1, 0);
-        belmarDefault.position.set(app.renderer.width, 0);
-        belmarDefault.pivot.set(36, -390);
         belmarDefault.play();
-        belmarDefault.scale.set(scale, scale);
 
-        belmarLook.animationSpeed = 0.2;
-        belmarLook.anchor.set(1, 0);
-        belmarLook.position.set(app.renderer.width, 0);
-        belmarLook.pivot.set(36, -390);
-        belmarLook.scale.set(scale, scale);
         belmarLook.loop = false;
         belmarLook.interactive = true;
 
-        belmarTransitionOut.animationSpeed = 0.2;
-        belmarTransitionOut.anchor.set(1, 0);
-        belmarTransitionOut.position.set(app.renderer.width, 0);
-        belmarTransitionOut.pivot.set(36, -390);
-        belmarTransitionOut.scale.set(scale, scale);
         belmarTransitionOut.loop = false;
 
-        belmarWave.animationSpeed = 0.2;
-        belmarWave.anchor.set(1, 0);
-        belmarWave.position.set(app.renderer.width, 0);
-        belmarWave.pivot.set(36, -390);
-        belmarWave.scale.set(scale, scale);
         belmarWave.loop = false;
         belmarWave.interactive = true;
 
@@ -175,9 +229,35 @@
             belmarLook.gotoAndPlay(0);
             app.stage.addChild(belmarLook);
         });
+    };
+
+    const setupSprites = async () => {
+        let scale = window.innerHeight / background.height;
+
+        for (let i = 0; i < sprites.length; i++) {
+            sprites[i].animationSpeed = 0.2;
+            sprites[i].anchor.set(1, 0);
+            sprites[i].position.set(app.renderer.width, 0);
+            sprites[i].scale.set(scale, scale);
+        }
+    };
+
+    const drawScene = async () => {
+        app.stage.removeChildren();
+
+        await setupSprites();
+
+        await setupBelmar();
+        await setupRightShelf();
+
+        background.play();
 
         app.stage.addChild(background);
         app.stage.addChild(belmarDefault);
+        app.stage.addChild(purplePlant);
+        app.stage.addChild(speakerLeft);
+        app.stage.addChild(speakerRight);
+        app.stage.addChild(lightStrip);
     };
 </script>
 
@@ -190,11 +270,4 @@
 </div>
 
 <style>
-    #body {
-        background-image: url('images/background.gif');
-        background-position: right;
-        background-size: cover;
-        background-repeat: no-repeat;
-        height: 100vh;
-    }
 </style>
