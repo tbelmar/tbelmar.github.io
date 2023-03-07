@@ -38,6 +38,10 @@
     let shortPlant: AnimatedSprite;
     let viola: AnimatedSprite;
 
+    let smallShelfPlant: AnimatedSprite;
+    let smallShelfFlower: AnimatedSprite;
+    let smallShelfPeashooter: AnimatedSprite;
+
     let isHoveringOverCharacter = false;
 
     $: {
@@ -80,6 +84,13 @@
         shortPlant = await loadAnimatedSprite('plant-short', 10);
         viola = await loadAnimatedSprite('viola', 7);
 
+        smallShelfFlower = await loadAnimatedSprite('small-shelf-flower', 4);
+        smallShelfPlant = await loadAnimatedSprite('small-shelf-plant', 5);
+        smallShelfPeashooter = await loadAnimatedSprite(
+            'small-shelf-peashooter',
+            7
+        );
+
         sprites = [
             ...sprites,
             background,
@@ -98,7 +109,10 @@
             flowerPlant,
             tallPlant,
             shortPlant,
-            viola
+            viola,
+            smallShelfFlower,
+            smallShelfPlant,
+            smallShelfPeashooter
         ];
     };
 
@@ -163,7 +177,40 @@
         };
     };
 
-    const setupSmallShelf = () => {};
+    const setupSmallShelf = () => {
+        smallShelfPlant.pivot.set(898, -263);
+        smallShelfPlant.interactive = true;
+        smallShelfPlant.loop = false;
+        smallShelfPlant.animationSpeed = 0.15;
+        smallShelfPlant.onmouseover = () => {
+            smallShelfPlant.gotoAndPlay(0);
+        };
+        smallShelfPlant.onComplete = () => {
+            smallShelfPlant.gotoAndStop(0);
+        };
+
+        smallShelfPeashooter.pivot.set(740, -242);
+        smallShelfPeashooter.interactive = true;
+        smallShelfPeashooter.loop = false;
+        smallShelfPeashooter.animationSpeed = 0.3;
+        smallShelfPeashooter.onmouseover = () => {
+            smallShelfPeashooter.gotoAndPlay(0);
+        };
+        smallShelfPeashooter.onComplete = () => {
+            smallShelfPeashooter.gotoAndStop(0);
+        };
+
+        smallShelfFlower.pivot.set(650, -246);
+        smallShelfFlower.interactive = true;
+        smallShelfFlower.loop = false;
+        smallShelfFlower.animationSpeed = 0.15;
+        smallShelfFlower.onmouseover = () => {
+            smallShelfFlower.gotoAndPlay(0);
+        };
+        smallShelfFlower.onComplete = () => {
+            smallShelfFlower.gotoAndStop(0);
+        };
+    };
 
     const setupBed = () => {
         steve.pivot.set(660, -456);
@@ -211,6 +258,8 @@
         flowerPlant.onComplete = () => {
             flowerPlant.gotoAndStop(0);
         };
+
+        tallPlant.visible = false;
     };
 
     const setupRightShelf = () => {
@@ -365,6 +414,7 @@
         await setupFloorItems();
         await setupWall();
         await setupBed();
+        await setupSmallShelf();
         await setupPlants();
 
         background.play();
@@ -383,6 +433,9 @@
         app.stage.addChild(tallPlant);
         app.stage.addChild(shortPlant);
         app.stage.addChild(viola);
+        app.stage.addChild(smallShelfPlant);
+        app.stage.addChild(smallShelfFlower);
+        app.stage.addChild(smallShelfPeashooter);
     };
 </script>
 
