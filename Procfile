@@ -1,1 +1,1 @@
-web: npx vite dev --port $PORT
+web: npx vite prod --port $PORT
