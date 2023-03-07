@@ -6,12 +6,12 @@
 <style>
     @font-face {
         font-family: edunline;
-        src: url('https://fonts.cdnfonts.com/s/7348/edunline.woff');
+        src: url('fonts/edunline.ttf');
     }
 
     @font-face {
         font-family: o4b;
-        src: url('https://fonts.cdnfonts.com/s/7340/04B_03__.woff');
+        src: url('fonts/o4b.ttf');
     }
 
     .info-container {
