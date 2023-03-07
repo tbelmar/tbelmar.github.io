@@ -424,8 +424,9 @@
     };
 
     const setupMisc = () => {
-        downwardsArrow.pivot.set(460, -710);
-        downwardsArrow.scale.set(0.6, 0.6);
+        downwardsArrow.pivot.set(270, -420);
+        console.log('setting arrow scale');
+        //downwardsArrow.scale.set(0.6, 0.6);
         downwardsArrow.filters = [
             new GlowFilter({
                 distance: 15,
@@ -459,7 +460,8 @@
             sprites[i].animationSpeed = 0.2;
             sprites[i].anchor.set(1, 0);
             sprites[i].position.set(app.renderer.width, 0);
-            sprites[i].scale.set(scale, scale);
+            if (sprites[i].scale.x === 1 && sprites[i].scale.y === 1)
+                sprites[i].scale.set(scale, scale);
         }
     };
 
