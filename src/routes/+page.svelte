@@ -3,11 +3,16 @@
     import {
         AnimatedSprite,
         Application,
-        Circle,
-        Graphics,
+        Container,
+        FederatedMouseEvent,
+        Filter,
         Rectangle,
+        Sprite,
+        Texture,
         type ICanvas
     } from 'pixi.js';
+
+    import {GlowFilter} from 'pixi-filters';
 
     import {loadAnimatedSprite} from '../lib/helpers.js';
     import Header from '$lib/components/Header.svelte';
@@ -15,9 +20,11 @@
     let canvas: ICanvas;
     let app: Application;
 
-    let sprites: Array<AnimatedSprite> = [];
+    let sprites: Array<AnimatedSprite | Sprite> = [];
 
     let background: AnimatedSprite;
+
+    let belmarContainer: Container = new Container();
 
     let belmarDefault: AnimatedSprite;
     let belmarLook: AnimatedSprite;
@@ -41,6 +48,8 @@
     let smallShelfPlant: AnimatedSprite;
     let smallShelfFlower: AnimatedSprite;
     let smallShelfPeashooter: AnimatedSprite;
+
+    let downwardsArrow: Sprite;
 
     let isHoveringOverCharacter = false;
 
@@ -70,6 +79,8 @@
         );
         belmarWave = await loadAnimatedSprite('bigbelmar-wave', 13);
 
+        belmarContainer.addChild(belmarDefault);
+
         lightStrip = await loadAnimatedSprite('light-strip', 6);
         purplePlant = await loadAnimatedSprite('purple-plant', 8);
         speakerLeft = await loadAnimatedSprite('speaker-left', 5);
@@ -89,6 +100,10 @@
         smallShelfPeashooter = await loadAnimatedSprite(
             'small-shelf-peashooter',
             7
+        );
+
+        downwardsArrow = new Sprite(
+            await Texture.from('images/downwards-arrow.png')
         );
 
         sprites = [
@@ -112,7 +127,8 @@
             viola,
             smallShelfFlower,
             smallShelfPlant,
-            smallShelfPeashooter
+            smallShelfPeashooter,
+            downwardsArrow
         ];
     };
 
@@ -139,6 +155,13 @@
 
         drawScene();
     });
+
+    const fadeOut = (elem: Sprite | AnimatedSprite) => {
+        setInterval(() => {
+            elem.alpha -= 0.1;
+        }, 20);
+        //app.stage.removeChild(elem);
+    };
 
     const setupFloorItems = () => {
         bike.pivot.set(1182, -373);
@@ -332,17 +355,21 @@
         belmarWave.interactive = true;
 
         belmarLook.onmouseout = () => {
-            app.stage.removeChild(belmarLook);
+            belmarContainer.removeChild(belmarLook);
+
             belmarTransitionOut.gotoAndPlay(0);
-            app.stage.addChild(belmarTransitionOut);
+
+            belmarContainer.addChild(belmarTransitionOut);
             isHoveringOverCharacter = false;
         };
 
         belmarLook.onclick = () => {
-            app.stage.removeChild(belmarLook);
+            belmarContainer.removeChild(belmarLook);
+
             belmarWave.gotoAndPlay(0);
             isHoveringOverCharacter = true;
-            app.stage.addChild(belmarWave);
+
+            belmarContainer.addChild(belmarWave);
         };
 
         belmarLook.onmouseover = () => {
@@ -354,14 +381,14 @@
         };
 
         belmarWave.onComplete = () => {
-            app.stage.removeChild(belmarWave);
+            belmarContainer.removeChild(belmarWave);
 
             if (isHoveringOverCharacter) {
                 belmarLook.gotoAndPlay(33);
-                app.stage.addChild(belmarLook);
+                belmarContainer.addChild(belmarLook);
             } else {
                 belmarTransitionOut.gotoAndPlay(0);
-                app.stage.addChild(belmarTransitionOut);
+                belmarContainer.addChild(belmarTransitionOut);
             }
         };
 
@@ -370,27 +397,59 @@
         };
 
         belmarTransitionOut.onComplete = () => {
-            app.stage.removeChild(belmarTransitionOut);
-            app.stage.addChild(belmarDefault);
+            belmarContainer.removeChild(belmarTransitionOut);
+            belmarContainer.addChild(belmarDefault);
         };
 
         belmarDefault.onmouseover = () => {
-            app.stage.removeChild(belmarDefault);
+            belmarContainer.removeChild(belmarDefault);
             belmarLook.gotoAndPlay(0);
-            app.stage.addChild(belmarLook);
+            belmarContainer.addChild(belmarLook);
+
+            fadeOut(downwardsArrow);
         };
 
         belmarDefault.on('pointerdown', () => {
             belmarLook.onComplete = () => {
-                app.stage.removeChild(belmarLook);
+                belmarContainer.removeChild(belmarLook);
                 belmarWave.gotoAndPlay(0);
-                app.stage.addChild(belmarWave);
+                belmarContainer.addChild(belmarWave);
             };
 
-            app.stage.removeChild(belmarDefault);
+            belmarContainer.removeChild(belmarDefault);
+
             belmarLook.gotoAndPlay(0);
-            app.stage.addChild(belmarLook);
+            belmarContainer.addChild(belmarLook);
         });
+    };
+
+    const setupMisc = () => {
+        downwardsArrow.pivot.set(460, -710);
+        downwardsArrow.scale.set(0.6, 0.6);
+        downwardsArrow.filters = [
+            new GlowFilter({
+                distance: 15,
+                outerStrength: 3,
+                color: 0xffda87,
+                quality: 0.5
+            })
+        ];
+
+        const hover = () => {
+            let up = true;
+            setInterval(() => {
+                const x = downwardsArrow.x;
+                const y = downwardsArrow.y;
+
+                downwardsArrow.position.set(x, up ? y - 2 : y + 2);
+            }, 100);
+
+            setInterval(() => {
+                up = !up;
+            }, 500);
+        };
+
+        hover();
     };
 
     const setupSprites = async () => {
@@ -415,12 +474,15 @@
         await setupWall();
         await setupBed();
         await setupSmallShelf();
+
+        await setupMisc();
         await setupPlants();
 
         background.play();
 
         app.stage.addChild(background);
-        app.stage.addChild(belmarDefault);
+        app.stage.addChild(belmarContainer);
+        //app.stage.addChild(belmarDefault);
         app.stage.addChild(purplePlant);
         app.stage.addChild(speakerLeft);
         app.stage.addChild(speakerRight);
@@ -436,6 +498,7 @@
         app.stage.addChild(smallShelfPlant);
         app.stage.addChild(smallShelfFlower);
         app.stage.addChild(smallShelfPeashooter);
+        app.stage.addChild(downwardsArrow);
     };
 </script>
 

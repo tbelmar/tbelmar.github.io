@@ -24,6 +24,7 @@
     "dependencies": {
         "@pixi/gif": "^2.1.0",
         "dotenv": "^16.0.3",
+        "pixi-filters": "^5.2.0",
         "pixi.js": "^7.1.4",
         "prettier": "^2.8.4",
         "prettier-plugin-svelte": "^2.9.0"
