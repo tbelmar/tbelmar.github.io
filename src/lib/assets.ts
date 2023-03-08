@@ -1,4 +1,4 @@
-import {AnimatedSprite, Sprite} from 'pixi.js';
+import type {AnimatedSprite, Sprite} from 'pixi.js';
 
 type AnimatedSpriteContainer = {
     name: string;
