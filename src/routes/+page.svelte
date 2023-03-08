@@ -14,8 +14,16 @@
 
     import {GlowFilter} from 'pixi-filters';
 
+    import {framesCounted} from '$lib/stores.js';
     import {loadAnimatedSprite} from '../lib/helpers.js';
+
     import Header from '$lib/components/Header.svelte';
+
+    let numOfFrames;
+    framesCounted.subscribe((frames) => {
+        numOfFrames = frames;
+    });
+    const totalFrames = 297;
 
     let canvas: ICanvas;
     let app: Application;
@@ -51,21 +59,19 @@
 
     let downwardsArrow: Sprite;
 
-    let isHoveringOverCharacter = false;
+    let isClickable = false;
 
-    let loadText;
+    let percentageText;
     let loadPercentage = 0;
 
     $: {
         if (canvas) {
-            canvas.style!.cursor = isHoveringOverCharacter
-                ? 'pointer'
-                : 'default';
+            canvas.style!.cursor = isClickable ? 'pointer' : 'default';
         }
     }
 
     $: {
-        if (loadPercentage === 100) loadText.remove();
+        if (loadPercentage === 100) percentageText.remove();
     }
 
     const loadSprites = async () => {
@@ -81,7 +87,6 @@
         });
 
         belmarDefault = await loadAnimatedSprite('bigbelmar-default', 64);
-        loadPercentage = 10;
         belmarLook = await loadAnimatedSprite('bigbelmar-look', 34);
         loadPercentage = 15;
         belmarTransitionOut = await loadAnimatedSprite(
@@ -209,8 +214,14 @@
         flag.interactive = true;
         flag.loop = false;
         flag.animationSpeed = 0.3;
-        flag.onmouseover = () => {
-            flag.gotoAndPlay(0);
+        flag.onmouseenter = () => {
+            isClickable = true;
+        };
+        flag.onmouseleave = () => {
+            isClickable = false;
+        };
+        flag.onmouseup = () => {
+            if (!flag.playing) flag.gotoAndPlay(0);
         };
         flag.onComplete = () => {
             flag.gotoAndStop(0);
@@ -220,8 +231,14 @@
         viola.interactive = true;
         viola.loop = false;
         viola.animationSpeed = 0.3;
-        viola.onmouseover = () => {
-            viola.gotoAndPlay(0);
+        viola.onmouseenter = () => {
+            isClickable = true;
+        };
+        viola.onmouseleave = () => {
+            isClickable = false;
+        };
+        viola.onmouseup = () => {
+            if (!viola.playing) viola.gotoAndPlay(0);
         };
         viola.onComplete = () => {
             viola.gotoAndStop(0);
@@ -292,8 +309,15 @@
         shortPlant.interactive = true;
         shortPlant.loop = false;
         shortPlant.animationSpeed = 0.3;
-        shortPlant.onmouseover = () => {
-            shortPlant.gotoAndPlay(0);
+
+        shortPlant.onmouseenter = () => {
+            isClickable = true;
+        };
+        shortPlant.onmouseleave = () => {
+            isClickable = false;
+        };
+        shortPlant.onmouseup = () => {
+            if (!shortPlant.playing) shortPlant.gotoAndPlay(0);
         };
         shortPlant.onComplete = () => {
             shortPlant.gotoAndStop(0);
@@ -303,8 +327,14 @@
         flowerPlant.interactive = true;
         flowerPlant.loop = false;
         flowerPlant.animationSpeed = 0.3;
-        flowerPlant.onmouseover = () => {
-            flowerPlant.gotoAndPlay(0);
+        flowerPlant.onmouseenter = () => {
+            isClickable = true;
+        };
+        flowerPlant.onmouseleave = () => {
+            isClickable = false;
+        };
+        flowerPlant.onmouseup = () => {
+            if (!flowerPlant.playing) flowerPlant.gotoAndPlay(0);
         };
         flowerPlant.onComplete = () => {
             flowerPlant.gotoAndStop(0);
@@ -388,30 +418,30 @@
             belmarTransitionOut.gotoAndPlay(0);
 
             belmarContainer.addChild(belmarTransitionOut);
-            isHoveringOverCharacter = false;
+            isClickable = false;
         };
 
         belmarLook.onclick = () => {
             belmarContainer.removeChild(belmarLook);
 
             belmarWave.gotoAndPlay(0);
-            isHoveringOverCharacter = true;
+            isClickable = true;
 
             belmarContainer.addChild(belmarWave);
         };
 
         belmarLook.onmouseover = () => {
-            isHoveringOverCharacter = true;
+            isClickable = true;
         };
 
         belmarDefault.onmouseout = () => {
-            isHoveringOverCharacter = false;
+            isClickable = false;
         };
 
         belmarWave.onComplete = () => {
             belmarContainer.removeChild(belmarWave);
 
-            if (isHoveringOverCharacter) {
+            if (isClickable) {
                 belmarLook.gotoAndPlay(33);
                 belmarContainer.addChild(belmarLook);
             } else {
@@ -421,7 +451,7 @@
         };
 
         belmarWave.onmouseout = () => {
-            isHoveringOverCharacter = false;
+            isClickable = false;
         };
 
         belmarTransitionOut.onComplete = () => {
@@ -514,7 +544,6 @@
 
         app.stage.addChild(background);
         app.stage.addChild(belmarContainer);
-        //app.stage.addChild(belmarDefault);
         app.stage.addChild(purplePlant);
         app.stage.addChild(speakerLeft);
         app.stage.addChild(speakerRight);
@@ -538,7 +567,7 @@
     <Header />
 
     <h1
-        bind:this={loadText}
+        bind:this={percentageText}
         style="position: absolute; left: 50%; transform: translate(-50%, 0); font-family: o4b; text-align: center"
     >
         <br />
@@ -548,7 +577,7 @@
         <br />
         Loading...
         <br />
-        {loadPercentage}%
+        {Math.trunc(100 * ($framesCounted / totalFrames))}%
     </h1>
 
     <div class="app">

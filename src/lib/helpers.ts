@@ -1,4 +1,5 @@
 import {Texture, AnimatedSprite} from 'pixi.js';
+import {framesCounted} from './stores';
 
 export async function loadAnimatedSprite(
     name: String,
@@ -11,8 +12,8 @@ export async function loadAnimatedSprite(
             let texture = await Texture.fromURL(
                 `animations/${name}/${name}${i}.png`
             );
-
             frames.push(texture);
+            framesCounted.update((frame: number) => frame + 1);
         }
     } catch (err) {
         console.log('Error: File does not exist');
