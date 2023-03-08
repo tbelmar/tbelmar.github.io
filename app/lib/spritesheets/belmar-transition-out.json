@@ -1,0 +1,43 @@
+{ "frames": {
+   "belmar-transition-out-0.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-transition-out-1.aseprite": {
+    "frame": { "x": 272, "y": 0, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-transition-out-2.aseprite": {
+    "frame": { "x": 0, "y": 292, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-transition-out-3.aseprite": {
+    "frame": { "x": 272, "y": 292, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.40-x64",
+  "image": "belmar-transition-out.png",
+  "format": "RGBA8888",
+  "size": { "w": 544, "h": 584 },
+  "scale": "1"
+ }
+}

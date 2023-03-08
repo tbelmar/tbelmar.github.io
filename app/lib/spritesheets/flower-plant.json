@@ -1,0 +1,106 @@
+{ "frames": {
+   "flower-plant-0.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 84, "h": 152 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 152 },
+    "sourceSize": { "w": 84, "h": 152 },
+    "duration": 1000
+   },
+   "flower-plant-1.aseprite": {
+    "frame": { "x": 84, "y": 0, "w": 84, "h": 152 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 152 },
+    "sourceSize": { "w": 84, "h": 152 },
+    "duration": 100
+   },
+   "flower-plant-2.aseprite": {
+    "frame": { "x": 168, "y": 0, "w": 84, "h": 152 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 152 },
+    "sourceSize": { "w": 84, "h": 152 },
+    "duration": 100
+   },
+   "flower-plant-3.aseprite": {
+    "frame": { "x": 252, "y": 0, "w": 84, "h": 152 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 152 },
+    "sourceSize": { "w": 84, "h": 152 },
+    "duration": 100
+   },
+   "flower-plant-4.aseprite": {
+    "frame": { "x": 336, "y": 0, "w": 84, "h": 152 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 152 },
+    "sourceSize": { "w": 84, "h": 152 },
+    "duration": 100
+   },
+   "flower-plant-5.aseprite": {
+    "frame": { "x": 420, "y": 0, "w": 84, "h": 152 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 152 },
+    "sourceSize": { "w": 84, "h": 152 },
+    "duration": 100
+   },
+   "flower-plant-6.aseprite": {
+    "frame": { "x": 504, "y": 0, "w": 84, "h": 152 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 152 },
+    "sourceSize": { "w": 84, "h": 152 },
+    "duration": 100
+   },
+   "flower-plant-7.aseprite": {
+    "frame": { "x": 588, "y": 0, "w": 84, "h": 152 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 152 },
+    "sourceSize": { "w": 84, "h": 152 },
+    "duration": 100
+   },
+   "flower-plant-8.aseprite": {
+    "frame": { "x": 672, "y": 0, "w": 84, "h": 152 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 152 },
+    "sourceSize": { "w": 84, "h": 152 },
+    "duration": 100
+   },
+   "flower-plant-9.aseprite": {
+    "frame": { "x": 756, "y": 0, "w": 84, "h": 152 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 152 },
+    "sourceSize": { "w": 84, "h": 152 },
+    "duration": 100
+   },
+   "flower-plant-10.aseprite": {
+    "frame": { "x": 840, "y": 0, "w": 84, "h": 152 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 152 },
+    "sourceSize": { "w": 84, "h": 152 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.40-x64",
+  "image": "flower-plant.png",
+  "format": "RGBA8888",
+  "size": { "w": 924, "h": 152 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
