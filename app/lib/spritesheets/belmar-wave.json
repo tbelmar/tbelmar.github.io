@@ -1,0 +1,115 @@
+{ "frames": {
+   "belmar-wave-0.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-wave-1.aseprite": {
+    "frame": { "x": 272, "y": 0, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-wave-2.aseprite": {
+    "frame": { "x": 544, "y": 0, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-wave-3.aseprite": {
+    "frame": { "x": 0, "y": 292, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-wave-4.aseprite": {
+    "frame": { "x": 0, "y": 292, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-wave-5.aseprite": {
+    "frame": { "x": 0, "y": 292, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-wave-6.aseprite": {
+    "frame": { "x": 272, "y": 292, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-wave-7.aseprite": {
+    "frame": { "x": 272, "y": 292, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-wave-8.aseprite": {
+    "frame": { "x": 544, "y": 292, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-wave-9.aseprite": {
+    "frame": { "x": 544, "y": 292, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-wave-10.aseprite": {
+    "frame": { "x": 0, "y": 584, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-wave-11.aseprite": {
+    "frame": { "x": 272, "y": 584, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   },
+   "belmar-wave-12.aseprite": {
+    "frame": { "x": 544, "y": 584, "w": 272, "h": 292 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 84, "y": 36, "w": 272, "h": 292 },
+    "sourceSize": { "w": 384, "h": 384 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.40-x64",
+  "image": "belmar-wave.png",
+  "format": "RGBA8888",
+  "size": { "w": 816, "h": 876 },
+  "scale": "1"
+ }
+}

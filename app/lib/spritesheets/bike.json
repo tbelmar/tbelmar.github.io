@@ -1,0 +1,114 @@
+{ "frames": {
+   "bike-0.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "sourceSize": { "w": 276, "h": 164 },
+    "duration": 1000
+   },
+   "bike-1.aseprite": {
+    "frame": { "x": 276, "y": 0, "w": 276, "h": 164 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "sourceSize": { "w": 276, "h": 164 },
+    "duration": 100
+   },
+   "bike-2.aseprite": {
+    "frame": { "x": 552, "y": 0, "w": 276, "h": 164 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "sourceSize": { "w": 276, "h": 164 },
+    "duration": 100
+   },
+   "bike-3.aseprite": {
+    "frame": { "x": 828, "y": 0, "w": 276, "h": 164 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "sourceSize": { "w": 276, "h": 164 },
+    "duration": 100
+   },
+   "bike-4.aseprite": {
+    "frame": { "x": 1104, "y": 0, "w": 276, "h": 164 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "sourceSize": { "w": 276, "h": 164 },
+    "duration": 100
+   },
+   "bike-5.aseprite": {
+    "frame": { "x": 1380, "y": 0, "w": 276, "h": 164 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "sourceSize": { "w": 276, "h": 164 },
+    "duration": 100
+   },
+   "bike-6.aseprite": {
+    "frame": { "x": 1656, "y": 0, "w": 276, "h": 164 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "sourceSize": { "w": 276, "h": 164 },
+    "duration": 100
+   },
+   "bike-7.aseprite": {
+    "frame": { "x": 1932, "y": 0, "w": 276, "h": 164 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "sourceSize": { "w": 276, "h": 164 },
+    "duration": 100
+   },
+   "bike-8.aseprite": {
+    "frame": { "x": 2208, "y": 0, "w": 276, "h": 164 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "sourceSize": { "w": 276, "h": 164 },
+    "duration": 100
+   },
+   "bike-9.aseprite": {
+    "frame": { "x": 2484, "y": 0, "w": 276, "h": 164 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "sourceSize": { "w": 276, "h": 164 },
+    "duration": 100
+   },
+   "bike-10.aseprite": {
+    "frame": { "x": 2760, "y": 0, "w": 276, "h": 164 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "sourceSize": { "w": 276, "h": 164 },
+    "duration": 100
+   },
+   "bike-11.aseprite": {
+    "frame": { "x": 3036, "y": 0, "w": 276, "h": 164 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 276, "h": 164 },
+    "sourceSize": { "w": 276, "h": 164 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.40-x64",
+  "image": "bike.png",
+  "format": "RGBA8888",
+  "size": { "w": 3312, "h": 164 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

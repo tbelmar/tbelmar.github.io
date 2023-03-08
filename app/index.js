@@ -1,27 +1,46 @@
-async function buildAnimatedSprite(spriteName, numOfFrames) {
-    let frames = [];
+let animatedSprites = [
+    background,
+    belmarDefault,
+    belmarLook,
+    belmarTransitionOut,
+    belmarWave,
+    smallShelfPlant,
+    smallShelfFlower,
+    smallShelfPeashooter,
+    bike,
+    flag,
+    knight,
+    steve,
+    viola,
+    flowerPlant,
+    tallPlant,
+    shortPlant,
+    purplePlant,
+    speakerLeft,
+    speakerRight,
+    lightStrip
+];
 
-    for (let i = 1; i <= numOfFrames; i++) {
-        let texture = await PIXI.Assets.load(
-            `lib/animations/${spriteName}/${spriteName}${i}.png`
-        );
-        frames.push(texture);
-    }
-    let sprite = new PIXI.AnimatedSprite(frames);
+async function getAnimatedSprite(spriteSheetName) {
+    const sheet = await PIXI.Assets.load(
+        `lib/spritesheets/${spriteSheetName}.json`
+    );
+    let sprite = new PIXI.AnimatedSprite(Object.values(sheet.textures));
 
     return sprite;
 }
 
 async function spritesSetup() {
-    background.sprite = await buildAnimatedSprite('bg-non-interactive', 64);
+    background.sprite =
+        background.sprite || (await getAnimatedSprite('background'));
 
     const scale = window.innerHeight / background.sprite.height;
+    background.sprite.scale.set(scale, scale);
 
     for (let i = 0; i < animatedSprites.length; i++) {
         const spriteObject = animatedSprites[i];
         const sprite =
-            spriteObject.sprite ||
-            (await buildAnimatedSprite(spriteObject.name, spriteObject.frames));
+            spriteObject.sprite || (await getAnimatedSprite(spriteObject.name));
 
         spriteObject.sprite = sprite;
 
@@ -171,7 +190,7 @@ async function render() {
     await characterSetup();
 
     for (const spriteObject of animatedSprites) {
-        if (!spriteObject.dontAutoRender) {
+        if (spriteObject.sprite && !spriteObject.dontAutoRender) {
             app.stage.addChild(spriteObject.sprite);
         }
     }

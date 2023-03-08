@@ -5,167 +5,146 @@ let background = {
     autoplay: true
 };
 
+// old pivot: x: 37, y: -390. use this to figure out how much to translate others
 let belmarDefault = {
-    name: 'bigbelmar-default',
+    name: 'belmar-default',
     frames: 64,
-    pivot: {x: 37, y: -390},
+    pivot: {x: 25, y: -260},
     autoplay: true,
-    hitArea: [-380, 100, 200, 300],
+    hitArea: [-253, 67, 133, 200],
     dontAutoRender: true
 };
 
 let belmarLook = {
-    name: 'bigbelmar-look',
+    name: 'belmar-look',
     frames: 34,
-    pivot: {x: 37, y: -390},
-    hitArea: [-380, 100, 200, 300],
+    pivot: {x: 25, y: -260},
+    hitArea: [-253, 67, 133, 200],
     dontAutoRender: true
 };
 
 let belmarTransitionOut = {
-    name: 'bigbelmar-transition-out',
+    name: 'belmar-transition-out',
     frames: 4,
-    pivot: {x: 37, y: -390},
-    hitArea: [-380, 100, 200, 300],
+    pivot: {x: 25, y: -260},
+    hitArea: [-253, 67, 133, 200],
     dontAutoRender: true
 };
 
 let belmarWave = {
-    name: 'bigbelmar-wave',
+    name: 'belmar-wave',
     frames: 13,
-    pivot: {x: 37, y: -390},
-    hitArea: [-380, 100, 200, 300],
+    pivot: {x: 25, y: -260},
+    hitArea: [-253, 67, 133, 200],
     dontAutoRender: true
 };
 
 let lightStrip = {
     name: 'light-strip',
     frames: 6,
-    pivot: {x: -24, y: -330},
-    hitArea: [-320, -20, 120, 120],
+    pivot: {x: -16, y: -220},
+    hitArea: [-213, -13, 80, 80],
     playOnMouseover: true
 };
 
 let purplePlant = {
     name: 'purple-plant',
     frames: 8,
-    pivot: {x: 96, y: -286},
+    pivot: {x: 64, y: -191},
     playOnMouseover: true
 };
 
 let speakerLeft = {
     name: 'speaker-left',
     frames: 5,
-    pivot: {x: 109, y: -378},
+    pivot: {x: 73, y: -252},
     playOnMouseover: true
 };
 
 let speakerRight = {
     name: 'speaker-right',
     frames: 5,
-    pivot: {x: -18, y: -462},
+    pivot: {x: -12, y: -308},
     playOnMouseover: true
 };
 
 let bike = {
     name: 'bike',
     frames: 12,
-    pivot: {x: 1182, y: -373},
+    pivot: {x: 788, y: -249},
     playOnHover: true
 };
 
 let flag = {
     name: 'flag',
     frames: 11,
-    pivot: {x: 678, y: -330},
+    pivot: {x: 452, y: -220},
     playOnClick: true
 };
 
 let knight = {
     name: 'knight',
     frames: 10,
-    pivot: {x: 756, y: -492},
+    pivot: {x: 504, y: -328},
     playOnMouseover: true
 };
 
 let steve = {
     name: 'steve',
     frames: 5,
-    pivot: {x: 660, y: -456},
+    pivot: {x: 440, y: -304},
     playOnMouseover: true
 };
 
 let viola = {
     name: 'viola',
     frames: 7,
-    pivot: {x: 704, y: -176},
+    pivot: {x: 469, y: -117},
     playOnClick: true
 };
 
 let flowerPlant = {
-    name: 'plant-flowers',
+    name: 'flower-plant',
     frames: 11,
-    pivot: {x: -1, y: -690},
+    pivot: {x: -1, y: -460},
     playOnClick: true
 };
 let tallPlant = {
-    name: 'plant-tall',
+    name: 'tall-plant',
     frames: 12,
-    pivot: {x: 1182, y: -373},
+    pivot: {x: 788, y: -249},
     playOnClick: true,
     dontAutoRender: true
 };
 let shortPlant = {
-    name: 'plant-short',
+    name: 'short-plant',
     frames: 10,
-    pivot: {x: 1050, y: -432},
+    pivot: {x: 700, y: -288},
     playOnClick: true
 };
 
 let smallShelfPlant = {
     name: 'small-shelf-plant',
     frames: 5,
-    pivot: {x: 898, y: -263},
+    pivot: {x: 599, y: -175},
     playOnMouseover: true
 };
 
 let smallShelfFlower = {
     name: 'small-shelf-flower',
     frames: 4,
-    pivot: {x: 650, y: -246},
+    pivot: {x: 433, y: -164},
     playOnMouseover: true
 };
 let smallShelfPeashooter = {
     name: 'small-shelf-peashooter',
     frames: 7,
-    pivot: {x: 740, y: -242},
+    pivot: {x: 493, y: -161},
     playOnMouseover: true
 };
 
 let downwardsArrow = {
     name: 'downwards-arrow',
-    pivot: {x: 1182, y: -373}
+    pivot: {x: 788, y: -249}
 };
 
-let animatedSprites = [
-    background,
-    belmarDefault,
-    belmarLook,
-    belmarTransitionOut,
-    belmarWave,
-    lightStrip,
-    purplePlant,
-    speakerLeft,
-    speakerRight,
-    bike,
-    flag,
-    knight,
-    steve,
-    viola,
-    flowerPlant,
-    tallPlant,
-    shortPlant,
-    smallShelfPlant,
-    smallShelfFlower,
-    smallShelfPeashooter
-];
