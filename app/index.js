@@ -21,6 +21,9 @@ let animatedSprites = [
     lightStrip
 ];
 
+let staticSprites = [downwardsArrow];
+
+// Gets a spritesheet's name and turns it into an AnimatedSprite
 async function getAnimatedSprite(spriteSheetName) {
     const sheet = await PIXI.Assets.load(
         `lib/spritesheets/${spriteSheetName}.json`
@@ -30,13 +33,18 @@ async function getAnimatedSprite(spriteSheetName) {
     return sprite;
 }
 
+console.log(PIXI.filters.GlowFilter);
+
+// Sets basic properties to all sprites
 async function spritesSetup() {
+    // Background Setup
     background.sprite =
         background.sprite || (await getAnimatedSprite('background'));
 
     const scale = window.innerHeight / background.sprite.height;
     background.sprite.scale.set(scale, scale);
 
+    // Animated Sprites Setup
     for (let i = 0; i < animatedSprites.length; i++) {
         const spriteObject = animatedSprites[i];
         const sprite =
@@ -100,10 +108,46 @@ async function spritesSetup() {
             };
         }
     }
+
+    // Normal Sprites Setup
+    for (let i = 0; i < staticSprites.length; i++) {
+        const spriteObject = staticSprites[i];
+        const sprite = PIXI.Sprite.from(`lib/sprites/${spriteObject.name}.png`);
+        if (spriteObject.pivot) {
+            sprite.pivot.set(spriteObject.pivot.x, spriteObject.pivot.y);
+        }
+    }
+    console.log(GlowFilter);
+
+    downwardsArrow.sprite.filters = [
+        new PIXI.filters.GlowFilter({
+            distance: 15,
+            outerStrength: 3,
+            color: 0xffda87,
+            quality: 0.5
+        })
+    ];
+
+    const hover = () => {
+        let up = true;
+        setInterval(() => {
+            const x = downwardsArrow.x;
+            const y = downwardsArrow.y;
+
+            downwardsArrow.position.set(x, up ? y - 2 : y + 2);
+        }, 100);
+
+        setInterval(() => {
+            up = !up;
+        }, 500);
+    };
+
+    hover();
 }
 
 let belmarContainer = new PIXI.Container();
 
+// Sets up behavior of "Belmar" character
 async function characterSetup() {
     belmarContainer.addChild(belmarDefault.sprite);
     belmarDefault.sprite.play();
