@@ -21,7 +21,7 @@ type SpriteContainer = {
 };
 
 export let background: AnimatedSpriteContainer = {
-    name: 'bg-non-interactive',
+    name: 'background',
     pivot: {x: 0, y: 0},
     autoplay: true
 };

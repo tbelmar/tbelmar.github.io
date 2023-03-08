@@ -100,8 +100,11 @@
         background.sprite =
             background.sprite || (await getAnimatedSprite('background'));
 
-        const scale = window.innerHeight / background.sprite.height;
-        background.sprite.scale.set(scale, scale);
+        // The background, and only the background, is 3/4 the scale of all the other objects
+        // (texture was too big for some browsers otherwise). Hence why we have to do this little
+        // piece of arithmetic
+        const scale = ((3 / 4) * window.innerHeight) / background.sprite.height;
+        background.sprite.scale.set((4 / 3) * scale, (4 / 3) * scale);
 
         for (let i = 0; i < animatedSprites.length; i++) {
             const spriteObject = animatedSprites[i];
