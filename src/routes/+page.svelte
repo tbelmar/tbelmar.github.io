@@ -391,7 +391,6 @@
         <br />
         <br />
         <br />
-        <br />
         Loading...
         <br />
         {Math.trunc(100 * (itemsLoaded / totalItemsToLoad))}%

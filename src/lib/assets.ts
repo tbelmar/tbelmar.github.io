@@ -150,5 +150,5 @@ export let smallShelfPeashooter: AnimatedSpriteContainer = {
 
 export let downwardsArrow: SpriteContainer = {
     name: 'downwards-arrow',
-    pivot: {x: 188, y: -280}
+    pivot: {x: 184, y: -278}
 };
