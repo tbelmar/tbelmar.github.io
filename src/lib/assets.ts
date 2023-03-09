@@ -54,6 +54,12 @@ export let belmarWave: AnimatedSpriteContainer = {
     dontAutoRender: true
 };
 
+export let roomWindow: AnimatedSpriteContainer = {
+    name: 'window',
+    pivot: {x: 695, y: -116},
+    autoplay: true
+};
+
 export let lightStrip: AnimatedSpriteContainer = {
     name: 'light-strip',
     pivot: {x: -16, y: -220},
