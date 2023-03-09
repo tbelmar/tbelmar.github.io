@@ -98,13 +98,14 @@
 
     // Sets basic properties to all sprites
     async function spritesSetup() {
-        background.sprite =
-            background.sprite ||
-            Sprite.from(await Texture.fromURL('sprites/background-img.png'));
+        const bgTexture = await Texture.fromURL('sprites/background-img.png');
+        background.sprite = background.sprite || Sprite.from(bgTexture);
         background.sprite.anchor.set(1, 0);
         background.sprite.position.set(app.renderer.width, 0);
-        const scale = window.innerHeight / background.sprite.height;
+        const scale = window.innerHeight / bgTexture.height;
         background.sprite.scale.set(scale, scale);
+
+        console.log(scale);
 
         app.stage.addChild(background.sprite);
 
@@ -179,6 +180,7 @@
                 };
             }
 
+            //if (!spriteObject.dontAutoRender) fadeIn(sprite);
             itemsLoaded++;
         }
 
@@ -193,6 +195,8 @@
             sprite.anchor.set(1, 0);
             sprite.position.set(app.renderer.width, 0);
             sprite.scale.set(scale, scale);
+
+            console.log(scale);
 
             if (spriteObject.pivot) {
                 sprite.pivot.set(spriteObject.pivot.x, spriteObject.pivot.y);
@@ -217,9 +221,21 @@
     };
 
     const fadeOut = (elem: Sprite | AnimatedSprite) => {
-        setInterval(() => {
+        const interval = setInterval(() => {
             elem.alpha -= 0.1;
-            if (elem.alpha <= 0) app.stage.removeChild(elem);
+            if (elem.alpha <= 0) {
+                clearInterval(interval);
+                app.stage.removeChild(elem);
+            }
+        }, 20);
+    };
+
+    const fadeIn = (elem: Sprite | AnimatedSprite | Container) => {
+        elem.alpha = 0;
+        app.stage.addChild(elem);
+        var interval = setInterval(() => {
+            elem.alpha += 0.05;
+            if (elem.alpha >= 1) clearInterval(interval);
         }, 20);
     };
 
@@ -347,12 +363,14 @@
         await spritesSetup();
         await characterSetup();
 
+        // Added items to stage with fadeIn above. If you want to remove the fadeIn uncomment this and delete it above
         for (const spriteObject of animatedSprites) {
             if (spriteObject.sprite && !spriteObject.dontAutoRender) {
                 app.stage.addChild(spriteObject.sprite);
             }
         }
 
+        //fadeIn(belmarContainer);
         app.stage.addChild(belmarContainer);
 
         downwardsArrow.sprite!.filters = [
@@ -366,6 +384,7 @@
 
         for (const spriteObject of staticSprites) {
             if (spriteObject.sprite && !spriteObject.dontAutoRender) {
+                //fadeIn(spriteObject.sprite);
                 app.stage.addChild(spriteObject.sprite);
             }
         }
@@ -375,8 +394,7 @@
 
     onMount(() => {
         app = new Application({
-            width: window.innerWidth,
-            height: window.innerHeight,
+            resizeTo: window,
             view: canvas,
             backgroundAlpha: 0
         });
