@@ -407,7 +407,8 @@
 
     <h1
         bind:this={percentageText}
-        style="position: absolute; left: 50%; transform: translate(-50%, 0); font-family: o4b; text-align: center"
+        style="position: absolute; left: 50%; transform: translate(-50%, 0); font-family: o4b; text-align: center; color: white; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+        5px 5px 0 #000;"
     >
         <br />
         <br />
