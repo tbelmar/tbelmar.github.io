@@ -20,10 +20,9 @@ type SpriteContainer = {
     dontAutoRender?: boolean;
 };
 
-export let background: AnimatedSpriteContainer = {
-    name: 'background',
-    pivot: {x: 0, y: 0},
-    autoplay: true
+export let background: SpriteContainer = {
+    name: 'background-img',
+    pivot: {x: 0, y: 0}
 };
 
 export let belmarDefault: AnimatedSpriteContainer = {
