@@ -178,7 +178,7 @@
                 };
             }
 
-            //if (!spriteObject.dontAutoRender) fadeIn(sprite);
+            if (!spriteObject.dontAutoRender) fadeIn(sprite);
             itemsLoaded++;
         }
 
@@ -362,14 +362,14 @@
         await characterSetup();
 
         // Added items to stage with fadeIn above. If you want to remove the fadeIn uncomment this and delete it above
-        for (const spriteObject of animatedSprites) {
+        /*for (const spriteObject of animatedSprites) {
             if (spriteObject.sprite && !spriteObject.dontAutoRender) {
                 app.stage.addChild(spriteObject.sprite);
             }
-        }
+        }*/
 
-        //fadeIn(belmarContainer);
-        app.stage.addChild(belmarContainer);
+        fadeIn(belmarContainer);
+        //app.stage.addChild(belmarContainer);
 
         downwardsArrow.sprite!.filters = [
             new GlowFilter({
@@ -382,8 +382,8 @@
 
         for (const spriteObject of staticSprites) {
             if (spriteObject.sprite && !spriteObject.dontAutoRender) {
-                //fadeIn(spriteObject.sprite);
-                app.stage.addChild(spriteObject.sprite);
+                fadeIn(spriteObject.sprite);
+                //app.stage.addChild(spriteObject.sprite);
             }
         }
 
