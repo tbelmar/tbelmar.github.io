@@ -105,8 +105,6 @@
         const scale = window.innerHeight / bgTexture.height;
         background.sprite.scale.set(scale, scale);
 
-        console.log(scale);
-
         app.stage.addChild(background.sprite);
 
         for (let i = 0; i < animatedSprites.length; i++) {
@@ -394,7 +392,8 @@
 
     onMount(() => {
         app = new Application({
-            resizeTo: window,
+            height: window.innerHeight,
+            width: window.innerWidth,
             view: canvas,
             backgroundAlpha: 0
         });
@@ -410,6 +409,7 @@
         bind:this={percentageText}
         style="position: absolute; left: 50%; transform: translate(-50%, 0); font-family: o4b; text-align: center"
     >
+        <br />
         <br />
         <br />
         <br />
