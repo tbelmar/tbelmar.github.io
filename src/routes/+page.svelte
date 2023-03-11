@@ -410,6 +410,10 @@
     });
 </script>
 
+<svelte:head>
+    <title>Tomás Belmar | Software Developer</title>
+</svelte:head>
+
 <div id="body">
     <Header />
 
