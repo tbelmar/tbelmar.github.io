@@ -3,6 +3,8 @@ import type {AnimatedSprite, Sprite} from 'pixi.js';
 type AnimatedSpriteContainer = {
     name: string;
     pivot: {x: number; y: number};
+    anchor?: {x: number; y: number};
+    rotation?: number;
     sprite?: AnimatedSprite;
     animationSpeed?: number;
     hitArea?: [number, number, number, number];
@@ -110,9 +112,17 @@ export let steve: AnimatedSpriteContainer = {
     playOnMouseover: true
 };
 
-export let viola: AnimatedSpriteContainer = {
+// Old viola, on the wall
+/*export let viola: AnimatedSpriteContainer = {
     name: 'viola',
     pivot: {x: 469, y: -117},
+    playOnClick: true
+};*/
+
+export let viola: AnimatedSpriteContainer = {
+    name: 'viola',
+    pivot: {x: 420, y: 610},
+    rotation: (3 / 2) * Math.PI + 0.1,
     playOnClick: true
 };
 

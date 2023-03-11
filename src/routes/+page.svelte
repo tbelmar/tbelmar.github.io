@@ -87,7 +87,7 @@
     }
 
     // Gets a spritesheet's name and turns it into an AnimatedSprite
-    async function getAnimatedSprite(spriteSheetName: string) {
+    async function loadAnimatedSprite(spriteSheetName: string) {
         const sheet = await Assets.load(`spritesheets/${spriteSheetName}.json`);
         let sprite = new AnimatedSprite(
             Object.values(sheet.textures) as Array<Texture>
@@ -97,7 +97,7 @@
     }
 
     // Sets basic properties to all sprites
-    async function spritesSetup() {
+    async function setupProps() {
         const bgTexture = await Texture.fromURL('sprites/background-img.png');
         background.sprite = background.sprite || Sprite.from(bgTexture);
         background.sprite.anchor.set(1, 0);
@@ -111,7 +111,7 @@
             const spriteObject = animatedSprites[i];
             const sprite =
                 spriteObject.sprite ||
-                (await getAnimatedSprite(spriteObject.name));
+                (await loadAnimatedSprite(spriteObject.name));
 
             spriteObject.sprite = sprite;
 
@@ -128,6 +128,14 @@
 
             if (spriteObject.pivot) {
                 sprite.pivot.set(spriteObject.pivot.x, spriteObject.pivot.y);
+            }
+
+            if(spriteObject.rotation) {
+                sprite.rotation = spriteObject.rotation
+            }
+
+            if(spriteObject.anchor) {
+                sprite.anchor.set(spriteObject.anchor.x, spriteObject.anchor.y)
             }
 
             if (spriteObject.hitArea) {
@@ -204,7 +212,7 @@
         }
     }
 
-    const hover = (elem: Sprite | AnimatedSprite) => {
+    const itemHover = (elem: Sprite | AnimatedSprite) => {
         let up = true;
         setInterval(() => {
             const x = elem.x;
@@ -358,7 +366,7 @@
     }
 
     async function render() {
-        await spritesSetup();
+        await setupProps();
         await characterSetup();
 
         // Added items to stage with fadeIn above. If you want to remove the fadeIn uncomment this and delete it above
@@ -387,7 +395,7 @@
             }
         }
 
-        hover(downwardsArrow.sprite as Sprite);
+        itemHover(downwardsArrow.sprite as Sprite);
     }
 
     onMount(() => {
