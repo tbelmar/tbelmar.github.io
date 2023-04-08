@@ -27,6 +27,18 @@ export let background: SpriteContainer = {
     pivot: {x: 0, y: 0}
 };
 
+export let textboxPortrait: SpriteContainer = {
+    name: 'textbox-portrait',
+    pivot: {x: 350, y: -450},
+    dontAutoRender: true
+};
+
+export let textbox: SpriteContainer = {
+    name: 'textbox',
+    pivot: {x: 510, y: -450},
+    dontAutoRender: true
+};
+
 export let belmarDefault: AnimatedSpriteContainer = {
     name: 'belmar-default',
     pivot: {x: 25, y: -260},

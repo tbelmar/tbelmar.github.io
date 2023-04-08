@@ -13,6 +13,8 @@
 
     import {GlowFilter} from 'pixi-filters';
 
+    import {Text} from '@pixi/text';
+
     import Header from '$lib/components/Header.svelte';
     import {
         background,
@@ -20,6 +22,8 @@
         belmarLook,
         belmarTransitionOut,
         belmarWave,
+        textboxPortrait,
+        textbox,
         roomWindow,
         smallShelfPlant,
         smallShelfFlower,
@@ -67,7 +71,7 @@
         lightStrip
     ];
 
-    let staticSprites = [downwardsArrow];
+    let staticSprites = [downwardsArrow, textboxPortrait, textbox];
 
     let isClickable = false;
 
@@ -75,6 +79,8 @@
 
     let itemsLoaded = 0;
     let totalItemsToLoad = animatedSprites.length + staticSprites.length;
+
+    let scale = 1;
 
     $: {
         if (canvas) {
@@ -85,6 +91,10 @@
     $: {
         if (itemsLoaded / totalItemsToLoad === 1) percentageText.remove();
     }
+
+    /*async function displayText(text: string) {
+        text.textContent = text;
+    }*/
 
     // Gets a spritesheet's name and turns it into an AnimatedSprite
     async function loadAnimatedSprite(spriteSheetName: string) {
@@ -102,7 +112,7 @@
         background.sprite = background.sprite || Sprite.from(bgTexture);
         background.sprite.anchor.set(1, 0);
         background.sprite.position.set(app.renderer.width, 0);
-        const scale = window.innerHeight / bgTexture.height;
+        scale = window.innerHeight / bgTexture.height;
         background.sprite.scale.set(scale, scale);
 
         app.stage.addChild(background.sprite);
@@ -130,12 +140,12 @@
                 sprite.pivot.set(spriteObject.pivot.x, spriteObject.pivot.y);
             }
 
-            if(spriteObject.rotation) {
-                sprite.rotation = spriteObject.rotation
+            if (spriteObject.rotation) {
+                sprite.rotation = spriteObject.rotation;
             }
 
-            if(spriteObject.anchor) {
-                sprite.anchor.set(spriteObject.anchor.x, spriteObject.anchor.y)
+            if (spriteObject.anchor) {
+                sprite.anchor.set(spriteObject.anchor.x, spriteObject.anchor.y);
             }
 
             if (spriteObject.hitArea) {
@@ -202,8 +212,6 @@
             sprite.position.set(app.renderer.width, 0);
             sprite.scale.set(scale, scale);
 
-            console.log(scale);
-
             if (spriteObject.pivot) {
                 sprite.pivot.set(spriteObject.pivot.x, spriteObject.pivot.y);
             }
@@ -227,26 +235,34 @@
     };
 
     const fadeOut = (elem: Sprite | AnimatedSprite) => {
-        const interval = setInterval(() => {
-            elem.alpha -= 0.1;
-            if (elem.alpha <= 0) {
-                clearInterval(interval);
-                app.stage.removeChild(elem);
-            }
-        }, 20);
+        return new Promise((resolve) => {
+            const interval = setInterval(() => {
+                elem.alpha -= 0.1;
+                if (elem.alpha <= 0) {
+                    clearInterval(interval);
+                    app.stage.removeChild(elem);
+                    resolve(null);
+                }
+            }, 20);
+        });
     };
 
     const fadeIn = (elem: Sprite | AnimatedSprite | Container) => {
-        elem.alpha = 0;
-        app.stage.addChild(elem);
-        var interval = setInterval(() => {
-            elem.alpha += 0.05;
-            if (elem.alpha >= 1) clearInterval(interval);
-        }, 20);
+        return new Promise((resolve) => {
+            elem.alpha = 0;
+            app.stage.addChild(elem);
+            var interval = setInterval(() => {
+                elem.alpha += 0.05;
+                if (elem.alpha >= 1) {
+                    clearInterval(interval);
+                    resolve(null);
+                }
+            }, 20);
+        });
     };
 
     // Sets up behavior of "Belmar" character
-    async function characterSetup() {
+    async function setupCharacter() {
         if (
             !belmarDefault.sprite ||
             !belmarLook.sprite ||
@@ -289,6 +305,17 @@
 
             belmarWave.sprite.gotoAndPlay(0);
             isClickable = true;
+
+            if (!app.stage.children.includes(textbox.sprite as Sprite)) {
+                fadeIn(textbox.sprite as Sprite);
+                fadeIn(textboxPortrait.sprite as Sprite).then(() => {
+                    window.onclick = () => {
+                        fadeOut(textbox.sprite as Sprite);
+                        fadeOut(textboxPortrait.sprite as Sprite);
+                        window.onclick = null;
+                    };
+                });
+            }
 
             belmarContainer.addChild(belmarWave.sprite);
         };
@@ -365,9 +392,13 @@
         });
     }
 
+    // Sets up behavior of textbox, sound icons, and item box
+    async function setupGUI() {}
+
     async function render() {
         await setupProps();
-        await characterSetup();
+        await setupCharacter();
+        await setupGUI();
 
         // Added items to stage with fadeIn above. If you want to remove the fadeIn uncomment this and delete it above
         /*for (const spriteObject of animatedSprites) {
@@ -398,7 +429,7 @@
         itemHover(downwardsArrow.sprite as Sprite);
     }
 
-    onMount(() => {
+    onMount(async () => {
         app = new Application({
             height: window.innerHeight,
             width: window.innerWidth,
@@ -406,7 +437,24 @@
             backgroundAlpha: 0
         });
 
-        render();
+        await render();
+
+        /*const text = new Text("Oh hey! I didn't\n see you there.", {
+            fontFamily: 'merchant-copy',
+            strokeThickness: 0.2,
+            letterSpacing: 1,
+            fontSize: 20,
+            fill: 0xffffff,
+            align: 'left'
+        });
+
+        text.anchor.set(0, 0);
+        text.position.set(app.renderer.width, 0);
+        text.pivot.set(270, -430);
+        text.scale.set(scale, scale);
+
+        app.stage.addChild(text);
+        */
     });
 </script>
 
@@ -438,4 +486,8 @@
 </div>
 
 <style>
+    @font-face {
+        font-family: merchant-copy;
+        src: url('https://fonts.cdnfonts.com/s/16592/HandwritingCR-2.woff');
+    }
 </style>
