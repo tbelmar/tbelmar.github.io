@@ -8,6 +8,7 @@
         Rectangle,
         Sprite,
         Texture,
+        Text,
         type ICanvas
     } from 'pixi.js';
 
@@ -47,6 +48,8 @@
         TEXTBOX_UI_HEIGHT,
         TEXTBOX_UI_WIDTH
     } from '$lib/consts';
+
+    //import {Text} from '@pixi/text';
 
     let canvas: ICanvas;
     let app: Application;
@@ -430,6 +433,24 @@
             (window.innerWidth - TEXTBOX_MOBILE_WIDTH) / 2,
             -(window.innerHeight - TEXTBOX_MOBILE_HEIGHT - 20)
         );
+
+        const text = new Text(
+            "Gah! I wasn't expecting you here \nso soon. I'm still cleaning up my \nroom, but check back in a couple \nof days.",
+            {
+                fontFamily: 'o4b',
+                fontSize: 18,
+                fill: 0xffffff,
+                align: 'left'
+            }
+        );
+
+        text.anchor.set(0, 0);
+        text.position.set(app.renderer.width - TEXTBOX_UI_WIDTH + 30, 26);
+        if (text.scale.x === 1 && text.scale.y === 1) {
+            text.scale.set(scale, scale);
+        }
+
+        textboxContainer.addChild(text);
     }
 
     async function render() {
