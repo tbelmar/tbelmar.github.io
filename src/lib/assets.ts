@@ -41,6 +41,13 @@ export let textbox: SpriteContainer = {
     dontAutoRender: true
 };
 
+export let textboxMobile: SpriteContainer = {
+    name: 'textbox-mobile',
+    //pivot: {x: 510, y: -450},
+    pivot: {x: 0, y: 0},
+    dontAutoRender: true
+};
+
 export let belmarDefault: AnimatedSpriteContainer = {
     name: 'belmar-default',
     pivot: {x: 25, y: -260},

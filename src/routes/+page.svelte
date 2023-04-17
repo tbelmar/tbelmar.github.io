@@ -22,6 +22,7 @@
         belmarWave,
         textboxPortrait,
         textbox,
+        textboxMobile,
         roomWindow,
         smallShelfPlant,
         smallShelfFlower,
@@ -40,7 +41,12 @@
         lightStrip,
         downwardsArrow
     } from '$lib/assets';
-    import {TEXTBOX_UI_HEIGHT, TEXTBOX_UI_WIDTH} from '$lib/consts';
+    import {
+        TEXTBOX_MOBILE_HEIGHT,
+        TEXTBOX_MOBILE_WIDTH,
+        TEXTBOX_UI_HEIGHT,
+        TEXTBOX_UI_WIDTH
+    } from '$lib/consts';
 
     let canvas: ICanvas;
     let app: Application;
@@ -71,7 +77,12 @@
         lightStrip
     ];
 
-    let staticSprites = [downwardsArrow, textboxPortrait, textbox];
+    let staticSprites = [
+        downwardsArrow,
+        textboxPortrait,
+        textbox,
+        textboxMobile
+    ];
 
     let isClickable = false;
 
@@ -283,6 +294,17 @@
         belmarTransitionOut.sprite.loop = false;
         belmarWave.sprite.loop = false;
 
+        belmarDefault.sprite.onpointerdown = () => {
+            if (!app.stage.children.includes(textboxContainer)) {
+                fadeIn(textboxMobile.sprite as Sprite).then(() => {
+                    window.onpointerup = () => {
+                        fadeOut(textboxMobile.sprite as Sprite);
+                        window.onpointerup = null;
+                    };
+                });
+            }
+        };
+
         belmarLook.sprite.onmouseout = () => {
             if (!belmarTransitionOut.sprite) {
                 return;
@@ -403,6 +425,11 @@
             (window.innerWidth - TEXTBOX_UI_WIDTH) / 2,
             -(window.innerHeight - TEXTBOX_UI_HEIGHT - 50)
         );
+
+        textboxMobile.sprite?.pivot.set(
+            (window.innerWidth - TEXTBOX_MOBILE_WIDTH) / 2,
+            -(window.innerHeight - TEXTBOX_MOBILE_HEIGHT - 20)
+        );
     }
 
     async function render() {
@@ -452,23 +479,6 @@
         window.onresize = () => {
             location.reload();
         };
-
-        /*const text = new Text("Oh hey! I didn't\n see you there.", {
-            fontFamily: 'merchant-copy',
-            strokeThickness: 0.2,
-            letterSpacing: 1,
-            fontSize: 20,
-            fill: 0xffffff,
-            align: 'left'
-        });
-
-        text.anchor.set(0, 0);
-        text.position.set(app.renderer.width, 0);
-        text.pivot.set(270, -430);
-        text.scale.set(scale, scale);
-
-        app.stage.addChild(text);
-        */
     });
 </script>
 
