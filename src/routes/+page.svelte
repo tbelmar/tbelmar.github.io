@@ -13,8 +13,6 @@
 
     import {GlowFilter} from 'pixi-filters';
 
-    import {Text} from '@pixi/text';
-
     import Header from '$lib/components/Header.svelte';
     import {
         background,
@@ -42,11 +40,13 @@
         lightStrip,
         downwardsArrow
     } from '$lib/assets';
+    import {TEXTBOX_UI_HEIGHT, TEXTBOX_UI_WIDTH} from '$lib/consts';
 
     let canvas: ICanvas;
     let app: Application;
 
     let belmarContainer: Container = new Container();
+    let textboxContainer: Container = new Container();
 
     let animatedSprites = [
         belmarDefault,
@@ -234,7 +234,7 @@
         }, 700);
     };
 
-    const fadeOut = (elem: Sprite | AnimatedSprite) => {
+    const fadeOut = (elem: Sprite | AnimatedSprite | Container) => {
         return new Promise((resolve) => {
             const interval = setInterval(() => {
                 elem.alpha -= 0.1;
@@ -306,12 +306,10 @@
             belmarWave.sprite.gotoAndPlay(0);
             isClickable = true;
 
-            if (!app.stage.children.includes(textbox.sprite as Sprite)) {
-                fadeIn(textbox.sprite as Sprite);
-                fadeIn(textboxPortrait.sprite as Sprite).then(() => {
+            if (!app.stage.children.includes(textboxContainer)) {
+                fadeIn(textboxContainer).then(() => {
                     window.onclick = () => {
-                        fadeOut(textbox.sprite as Sprite);
-                        fadeOut(textboxPortrait.sprite as Sprite);
+                        fadeOut(textboxContainer);
                         window.onclick = null;
                     };
                 });
@@ -393,7 +391,19 @@
     }
 
     // Sets up behavior of textbox, sound icons, and item box
-    async function setupGUI() {}
+    async function setupGUI() {
+        if (!textbox.sprite || !textboxPortrait.sprite) {
+            return;
+        }
+
+        textboxContainer.addChild(textbox.sprite);
+        textboxContainer.addChild(textboxPortrait.sprite);
+
+        textboxContainer.pivot.set(
+            (window.innerWidth - TEXTBOX_UI_WIDTH) / 2,
+            -(window.innerHeight - TEXTBOX_UI_HEIGHT - 50)
+        );
+    }
 
     async function render() {
         await setupProps();
@@ -438,6 +448,10 @@
         });
 
         await render();
+
+        window.onresize = () => {
+            location.reload();
+        };
 
         /*const text = new Text("Oh hey! I didn't\n see you there.", {
             fontFamily: 'merchant-copy',

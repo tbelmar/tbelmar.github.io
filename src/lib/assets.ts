@@ -29,13 +29,15 @@ export let background: SpriteContainer = {
 
 export let textboxPortrait: SpriteContainer = {
     name: 'textbox-portrait',
-    pivot: {x: 350, y: -450},
+    //pivot: {x: 350, y: -450},
+    pivot: {x: 0, y: 0},
     dontAutoRender: true
 };
 
 export let textbox: SpriteContainer = {
     name: 'textbox',
-    pivot: {x: 510, y: -450},
+    //pivot: {x: 510, y: -450},
+    pivot: {x: 160, y: 0},
     dontAutoRender: true
 };
 
