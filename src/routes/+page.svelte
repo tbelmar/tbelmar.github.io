@@ -429,11 +429,6 @@
             -(window.innerHeight - TEXTBOX_UI_HEIGHT - 50)
         );
 
-        textboxMobile.sprite?.pivot.set(
-            (window.innerWidth - TEXTBOX_MOBILE_WIDTH) / 2,
-            -(window.innerHeight - TEXTBOX_MOBILE_HEIGHT - 20)
-        );
-
         const text = new Text(
             "Gah! I wasn't expecting you here \nso soon. I'm still cleaning up my \nroom, but check back in a couple \nof days.",
             {
@@ -451,6 +446,29 @@
         }
 
         textboxContainer.addChild(text);
+
+        textboxMobile.sprite?.pivot.set(
+            (window.innerWidth - TEXTBOX_MOBILE_WIDTH) / 2,
+            -(window.innerHeight - TEXTBOX_MOBILE_HEIGHT - 320)
+        );
+
+        const mobileText = new Text(
+            "Gah! I wasn't expecting you \nso soon. I'm still cleaning \nup my room, but check back \nin a couple of days.",
+            {
+                fontFamily: 'o4b',
+                fontSize: 16,
+                fill: 0xffffff,
+                align: 'left'
+            }
+        );
+
+        mobileText.anchor.set(0, 0);
+        mobileText.position.set(app.renderer.width - 660, 26);
+        if (mobileText.scale.x === 1 && mobileText.scale.y === 1) {
+            mobileText.scale.set(scale, scale);
+        }
+
+        textboxMobile.sprite?.addChild(mobileText);
     }
 
     async function render() {

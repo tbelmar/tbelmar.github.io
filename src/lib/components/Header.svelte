@@ -1,6 +1,6 @@
 <div class="info-container">
     <h1 class="name">TOMÁS BELMAR</h1>
-    <p class="job-title">Software Developer</p>
+    <!--<p class="job-title">Software Developer</p>-->
 </div>
 
 <style>
