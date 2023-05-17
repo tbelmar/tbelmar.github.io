@@ -251,13 +251,6 @@
             elem.position.set(x, yOffset);
         });
 
-        /*setInterval(() => {
-            const x = elem.x;
-            const y = elem.y;
-
-            elem.position.set(x, up ? y - 2 : y + 2);
-        }, 100);*/
-
         setInterval(() => {
             up = !up;
         }, 700);
