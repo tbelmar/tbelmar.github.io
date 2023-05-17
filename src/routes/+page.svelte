@@ -428,8 +428,11 @@
             if (textboxElement instanceof Sprite) {
                 textboxElement.texture.on('update', () => {
                     textboxContainer.pivot.set(
-                        (window.innerWidth - textboxContainer.width) / 2,
-                        -(window.innerHeight - textboxContainer.height - 50)
+                        (window.innerWidth - textboxContainer.width) /
+                            2 /
+                            textboxContainer.scale.x,
+                        -(window.innerHeight - textboxContainer.height - 50) /
+                            textboxContainer.scale.y
                     );
                 });
             }
