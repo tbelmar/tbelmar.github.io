@@ -467,6 +467,13 @@
         textboxText.anchor.set(0, 0);
         textboxText.pivot.set(350, -20);
 
+        if (textboxContainer.width > 0 && textboxContainer.height > 0) {
+            textboxContainer.pivot.set(
+                (window.innerWidth - textboxContainer.width) / 2,
+                -(window.innerHeight - textboxContainer.height - 50)
+            );
+        }
+
         textboxContainer.children.forEach((textboxElement) => {
             if (textboxElement instanceof Sprite) {
                 textboxElement.texture.on('update', () => {
