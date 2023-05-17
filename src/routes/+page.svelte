@@ -96,6 +96,8 @@
 
     let scale = 1;
 
+    let canWave = true;
+
     $: {
         if (canvas) {
             canvas.style!.cursor = isClickable ? 'pointer' : 'default';
@@ -313,6 +315,8 @@
                 return;
             }
 
+            canWave = true;
+
             belmarContainer.removeChild(belmarLook.sprite as AnimatedSprite);
 
             belmarTransitionOut.sprite.gotoAndPlay(0);
@@ -322,9 +326,11 @@
         };
 
         belmarLook.sprite.onclick = () => {
-            if (!belmarLook.sprite || !belmarWave.sprite) {
+            if (!(belmarLook.sprite && belmarWave.sprite && canWave)) {
                 return;
             }
+
+            canWave = false;
 
             belmarContainer.removeChild(belmarLook.sprite);
 
@@ -427,20 +433,6 @@
         textboxContainer.addChild(textbox.sprite);
         textboxContainer.addChild(textboxPortrait.sprite);
 
-        textboxContainer.children.forEach((textboxElement) => {
-            if (textboxElement instanceof Sprite) {
-                textboxElement.texture.on('update', () => {
-                    textboxContainer.pivot.set(
-                        (window.innerWidth - textboxContainer.width) /
-                            2 /
-                            textboxContainer.scale.x,
-                        -(window.innerHeight - textboxContainer.height - 50) /
-                            textboxContainer.scale.y
-                    );
-                });
-            }
-        });
-
         const text = new Text(
             "Gah! I wasn't expecting you here \nso soon. I'm still cleaning up my \nroom, but check back in a couple \nof days.",
             {
@@ -452,21 +444,34 @@
         );
 
         text.anchor.set(0, 0);
-        //text.position.set(app.renderer.width - TEXTBOX_UI_WIDTH + 30, 26);
-        if (text.scale.x === 1 && text.scale.y === 1) {
+        /*if (text.scale.x === 1 && text.scale.y === 1) {
             text.scale.set(scale, scale);
-        }
+        }*/
 
-        //textboxContainer.addChild(text);
+        textboxContainer.children.forEach((textboxElement) => {
+            if (textboxElement instanceof Sprite) {
+                textboxElement.texture.on('update', () => {
+                    // no need to account for "scale" here like in the mobileTextbox, because the container has scale 1
+                    // we also ignore the text's width by offsetting the pivot by it
+                    textboxContainer.pivot.set(
+                        (window.innerWidth - textboxContainer.width) / 2,
+                        -(window.innerHeight - textboxContainer.height - 50)
+                    );
+
+                    console.log(textbox.sprite?.width);
+
+                    text.pivot.set(350, -20);
+                });
+            }
+        });
+
+        textbox.sprite.addChild(text);
 
         textboxMobile.sprite?.texture.on('update', () => {
             textboxMobile.sprite?.pivot.set(
                 (window.innerWidth - textboxMobile.sprite.width) / 2,
                 -(window.innerHeight - textboxMobile.sprite.height)
             );
-
-            console.log(window.innerHeight);
-            console.log(textboxMobile.sprite?.scale);
 
             textboxMobile.sprite?.pivot.set(
                 (window.innerWidth - textboxMobile.sprite.width) /
