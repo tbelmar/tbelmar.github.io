@@ -444,31 +444,21 @@
         );
 
         text.anchor.set(0, 0);
+        text.pivot.set(350, -20);
 
         textboxContainer.children.forEach((textboxElement) => {
             if (textboxElement instanceof Sprite) {
                 textboxElement.texture.on('update', () => {
                     // no need to account for "scale" here like in the mobileTextbox, because the container has scale 1
-                    // we also ignore the text's width by offsetting the pivot by it
                     textboxContainer.pivot.set(
                         (window.innerWidth - textboxContainer.width) / 2,
                         -(window.innerHeight - textboxContainer.height - 50)
                     );
-
-                    text.pivot.set(350, -20);
                 });
             }
         });
 
         textbox.sprite.addChild(text);
-
-        textboxMobile.sprite?.texture.on('update', () => {
-            textboxMobile.sprite?.pivot.set(
-                (window.innerWidth - textboxMobile.sprite.width) / (2 * scale),
-                -(window.innerHeight - textboxMobile.sprite?.height - 15) /
-                    scale
-            );
-        });
 
         const mobileText = new Text(
             "Gah! I wasn't expecting you \nso soon. I'm still cleaning \nup my room, but check back \nin a couple of days.",
@@ -481,10 +471,22 @@
         );
 
         mobileText.anchor.set(0, 0);
-        mobileText.position.set(app.renderer.width - 660, 26);
+        mobileText.pivot.set(270, -25);
+
+        textboxMobile.sprite?.texture.on('update', () => {
+            textboxMobile.sprite?.pivot.set(
+                (window.innerWidth - textboxMobile.sprite.width) / (2 * scale),
+                -(window.innerHeight - textboxMobile.sprite?.height - 15) /
+                    scale
+            );
+        });
+
+        textboxMobile.sprite?.addChild(mobileText);
+
+        /*mobileText.position.set(app.renderer.width - 660, 26);
         if (mobileText.scale.x === 1 && mobileText.scale.y === 1) {
             mobileText.scale.set(scale, scale);
-        }
+        }*/
 
         //textboxMobile.sprite?.addChild(mobileText);
     }
