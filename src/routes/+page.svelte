@@ -10,7 +10,7 @@
         Texture,
         Text,
         type ICanvas,
-        Ticker
+        Graphics
     } from 'pixi.js';
 
     import {GlowFilter} from 'pixi-filters';
@@ -40,17 +40,8 @@
         purplePlant,
         speakerLeft,
         speakerRight,
-        lightStrip,
-        downwardsArrow
+        lightStrip
     } from '$lib/assets';
-    import {
-        TEXTBOX_MOBILE_HEIGHT,
-        TEXTBOX_MOBILE_WIDTH,
-        TEXTBOX_UI_HEIGHT,
-        TEXTBOX_UI_WIDTH
-    } from '$lib/consts';
-
-    //import {Text} from '@pixi/text';
 
     let canvas: ICanvas;
     let app: Application;
@@ -81,12 +72,7 @@
         lightStrip
     ];
 
-    let staticSprites = [
-        downwardsArrow,
-        textboxPortrait,
-        textbox,
-        textboxMobile
-    ];
+    let staticSprites = [textboxPortrait, textbox, textboxMobile];
 
     let mobileText: Text;
     let textboxText: Text;
@@ -109,10 +95,6 @@
     $: {
         if (itemsLoaded / totalItemsToLoad === 1) percentageText.remove();
     }
-
-    /*async function displayText(text: string) {
-        text.textContent = text;
-    }*/
 
     // Gets a spritesheet's name and turns it into an AnimatedSprite
     async function loadAnimatedSprite(spriteSheetName: string) {
@@ -238,24 +220,6 @@
         }
     }
 
-    const itemHover = (elem: Sprite | AnimatedSprite) => {
-        let up = true;
-        const ticker = Ticker.shared;
-
-        ticker.add((delta) => {
-            const x = elem.x;
-            const y = elem.y;
-
-            const yOffset = up ? y - 0.3 * delta : y + 0.3 * delta;
-
-            elem.position.set(x, yOffset);
-        });
-
-        setInterval(() => {
-            up = !up;
-        }, 700);
-    };
-
     const fadeOut = (elem: Sprite | AnimatedSprite | Container) => {
         return new Promise((resolve) => {
             const interval = setInterval(() => {
@@ -331,6 +295,15 @@
         belmarContainer.addChild(belmarDefault.sprite);
         belmarDefault.sprite.play();
 
+        belmarContainer.filters = [
+            new GlowFilter({
+                distance: 12,
+                outerStrength: 3,
+                color: 0xffda87,
+                quality: 0.5
+            })
+        ];
+
         belmarDefault.sprite.interactive = true;
         belmarLook.sprite.interactive = true;
         belmarWave.sprite.interactive = true;
@@ -371,7 +344,7 @@
                 belmarLook.sprite.gotoAndPlay(0);
                 belmarContainer.addChild(belmarLook.sprite);
 
-                if (downwardsArrow.sprite) fadeOut(downwardsArrow.sprite);
+                belmarContainer.filters = [];
             }
         };
 
@@ -457,7 +430,7 @@
             belmarLook.sprite.gotoAndPlay(0);
             belmarContainer.addChild(belmarLook.sprite);
 
-            if (downwardsArrow.sprite) fadeOut(downwardsArrow.sprite);
+            belmarContainer.filters = [];
         };
     }
 
@@ -519,13 +492,6 @@
         });
 
         textboxMobile.sprite?.addChild(mobileText);
-
-        /*mobileText.position.set(app.renderer.width - 660, 26);
-        if (mobileText.scale.x === 1 && mobileText.scale.y === 1) {
-            mobileText.scale.set(scale, scale);
-        }*/
-
-        //textboxMobile.sprite?.addChild(mobileText);
     }
 
     async function render() {
@@ -533,33 +499,28 @@
         await setupCharacter();
         await setupGUI();
 
-        // Added items to stage with fadeIn above. If you want to remove the fadeIn uncomment this and delete it above
-        /*for (const spriteObject of animatedSprites) {
-            if (spriteObject.sprite && !spriteObject.dontAutoRender) {
-                app.stage.addChild(spriteObject.sprite);
-            }
-        }*/
+        // TEMPORARY SOLUTION
+        // There is a 1 pixel wide column on the left of the container that shouldn't be there, so we will mask it.
+        const mask = new Graphics();
+        mask.beginFill(0x000000);
+        mask.drawRect(0, 0, 500, 500);
+        mask.endFill();
+
+        mask.position.set(app.renderer.width, 0);
+        mask.scale.set(scale, scale);
+
+        mask.pivot.set(324, -280);
+        app.stage.addChild(mask);
+
+        belmarContainer.mask = mask;
 
         fadeIn(belmarContainer);
-        //app.stage.addChild(belmarContainer);
-
-        downwardsArrow.sprite!.filters = [
-            new GlowFilter({
-                distance: 15,
-                outerStrength: 3,
-                color: 0xffda87,
-                quality: 0.5
-            })
-        ];
 
         for (const spriteObject of staticSprites) {
             if (spriteObject.sprite && !spriteObject.dontAutoRender) {
                 fadeIn(spriteObject.sprite);
-                //app.stage.addChild(spriteObject.sprite);
             }
         }
-
-        itemHover(downwardsArrow.sprite as Sprite);
     }
 
     onMount(async () => {
