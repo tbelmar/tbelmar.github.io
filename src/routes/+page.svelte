@@ -472,6 +472,8 @@
         textboxContainer.children.forEach((textboxElement) => {
             if (textboxElement instanceof Sprite) {
                 console.log('updating texture');
+                console.log(textboxContainer.width);
+                console.log(textboxContainer.height);
                 textboxElement.texture.on('update', () => {
                     // no need to account for "scale" here like in the mobileTextbox, because the container has scale 1
                     textboxContainer.pivot.set(
