@@ -9,7 +9,8 @@
         Sprite,
         Texture,
         Text,
-        type ICanvas
+        type ICanvas,
+        Ticker
     } from 'pixi.js';
 
     import {GlowFilter} from 'pixi-filters';
@@ -239,12 +240,23 @@
 
     const itemHover = (elem: Sprite | AnimatedSprite) => {
         let up = true;
-        setInterval(() => {
+        const ticker = Ticker.shared;
+
+        ticker.add((delta) => {
+            const x = elem.x;
+            const y = elem.y;
+
+            const yOffset = up ? y - 0.3 * delta : y + 0.3 * delta;
+
+            elem.position.set(x, yOffset);
+        });
+
+        /*setInterval(() => {
             const x = elem.x;
             const y = elem.y;
 
             elem.position.set(x, up ? y - 2 : y + 2);
-        }, 100);
+        }, 100);*/
 
         setInterval(() => {
             up = !up;
