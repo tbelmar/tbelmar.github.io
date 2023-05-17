@@ -424,10 +424,16 @@
         textboxContainer.addChild(textbox.sprite);
         textboxContainer.addChild(textboxPortrait.sprite);
 
-        textboxContainer.pivot.set(
-            (window.innerWidth - TEXTBOX_UI_WIDTH) / 2,
-            -(window.innerHeight - TEXTBOX_UI_HEIGHT - 50)
-        );
+        textboxContainer.children.forEach((textboxElement) => {
+            if (textboxElement instanceof Sprite) {
+                textboxElement.texture.on('update', () => {
+                    textboxContainer.pivot.set(
+                        (window.innerWidth - textboxContainer.width) / 2,
+                        -(window.innerHeight - textboxContainer.height - 50)
+                    );
+                });
+            }
+        });
 
         const text = new Text(
             "Gah! I wasn't expecting you here \nso soon. I'm still cleaning up my \nroom, but check back in a couple \nof days.",
@@ -445,7 +451,7 @@
             text.scale.set(scale, scale);
         }
 
-        textboxContainer.addChild(text);
+        //textboxContainer.addChild(text);
 
         textboxMobile.sprite?.pivot.set(
             (window.innerWidth - TEXTBOX_MOBILE_WIDTH) / 2,
