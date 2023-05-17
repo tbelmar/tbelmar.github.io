@@ -446,17 +446,30 @@
         );
 
         text.anchor.set(0, 0);
-        text.position.set(app.renderer.width - TEXTBOX_UI_WIDTH + 30, 26);
+        //text.position.set(app.renderer.width - TEXTBOX_UI_WIDTH + 30, 26);
         if (text.scale.x === 1 && text.scale.y === 1) {
             text.scale.set(scale, scale);
         }
 
         //textboxContainer.addChild(text);
 
-        textboxMobile.sprite?.pivot.set(
-            (window.innerWidth - TEXTBOX_MOBILE_WIDTH) / 2,
-            -(window.innerHeight - TEXTBOX_MOBILE_HEIGHT - 320)
-        );
+        textboxMobile.sprite?.texture.on('update', () => {
+            textboxMobile.sprite?.pivot.set(
+                (window.innerWidth - textboxMobile.sprite.width) / 2,
+                -(window.innerHeight - textboxMobile.sprite.height)
+            );
+
+            console.log(window.innerHeight);
+            console.log(textboxMobile.sprite?.scale);
+
+            textboxMobile.sprite?.pivot.set(
+                (window.innerWidth - textboxMobile.sprite.width) /
+                    2 /
+                    textboxMobile.sprite?.scale.x,
+                -(window.innerHeight - textboxMobile.sprite?.height - 15) /
+                    textboxMobile.sprite?.scale.y
+            );
+        });
 
         const mobileText = new Text(
             "Gah! I wasn't expecting you \nso soon. I'm still cleaning \nup my room, but check back \nin a couple of days.",
@@ -474,7 +487,7 @@
             mobileText.scale.set(scale, scale);
         }
 
-        textboxMobile.sprite?.addChild(mobileText);
+        //textboxMobile.sprite?.addChild(mobileText);
     }
 
     async function render() {
