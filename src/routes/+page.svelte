@@ -262,18 +262,18 @@
                 window.onclick = () => {
                     textObject.text = text;
                     clearInterval(interval);
-                    resolve(null);
+                    resolve(false);
                 };
 
                 window.onpointerdown = () => {
                     textObject.text = text;
                     clearInterval(interval);
-                    resolve(null);
+                    resolve(false);
                 };
 
                 if (i >= text.length) {
                     clearInterval(interval);
-                    resolve(null);
+                    resolve(true);
                 }
                 textObject.text += text.charAt(i);
                 i++;
@@ -362,7 +362,7 @@
         };
 
         belmarLook.sprite.onclick = () => {
-            if (!(belmarLook.sprite && belmarWave.sprite)) {
+            if (!belmarLook.sprite || !belmarWave.sprite) {
                 return;
             }
 
@@ -374,12 +374,23 @@
             isClickable = true;
 
             if (!app.stage.children.includes(textboxContainer)) {
-                displayTextbox(textboxContainer, textboxText).then(() => {
-                    window.onclick = () => {
-                        fadeOut(textboxContainer);
-                        window.onclick = null;
-                    };
-                });
+                displayTextbox(textboxContainer, textboxText).then(
+                    (finished) => {
+                        if (finished) {
+                            window.onclick = () => {
+                                fadeOut(textboxContainer);
+                                window.onclick = null;
+                            };
+                        } else {
+                            setTimeout(() => {
+                                window.onclick = () => {
+                                    fadeOut(textboxContainer);
+                                    window.onclick = null;
+                                };
+                            }, 150);
+                        }
+                    }
+                );
             }
 
             belmarContainer.addChild(belmarWave.sprite);
