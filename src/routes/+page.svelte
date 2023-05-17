@@ -300,9 +300,9 @@
         belmarDefault.sprite.onpointerdown = () => {
             if (!app.stage.children.includes(textboxContainer)) {
                 fadeIn(textboxMobile.sprite as Sprite).then(() => {
-                    window.onpointerup = () => {
+                    window.onpointerdown = () => {
                         fadeOut(textboxMobile.sprite as Sprite);
-                        window.onpointerup = null;
+                        window.onpointerdown = null;
                     };
                 });
             }
@@ -397,7 +397,10 @@
             if (!belmarLook.sprite || !belmarDefault.sprite) {
                 return;
             }
-            belmarLook.sprite.onComplete = () => {
+            belmarLook.sprite.onFrameChange = () => {
+                // Similar to onComplete, but "completing" at frame 15. Feels more natural to end the animation there
+                if (belmarLook.sprite?.currentFrame !== 15) return;
+
                 if (!belmarLook.sprite || !belmarWave.sprite) {
                     return;
                 }
