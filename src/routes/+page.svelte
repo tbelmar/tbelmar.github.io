@@ -87,6 +87,9 @@
         textboxMobile
     ];
 
+    let mobileText: Text;
+    let textboxText: Text;
+
     let isClickable = false;
 
     let percentageText: any;
@@ -95,8 +98,6 @@
     let totalItemsToLoad = animatedSprites.length + staticSprites.length;
 
     let scale = 1;
-
-    let canWave = true;
 
     $: {
         if (canvas) {
@@ -258,6 +259,7 @@
                     clearInterval(interval);
                     app.stage.removeChild(elem);
                     resolve(null);
+                    elem.alpha = 1;
                 }
             }, 20);
         });
@@ -273,6 +275,39 @@
                     clearInterval(interval);
                     resolve(null);
                 }
+            }, 20);
+        });
+    };
+
+    const displayTextbox = (
+        container: Sprite | AnimatedSprite | Container,
+        textObject: Text
+    ) => {
+        return new Promise((resolve) => {
+            const text = textObject.text;
+            textObject.text = '';
+            fadeIn(container);
+
+            let i = 0;
+            const interval = setInterval(() => {
+                window.onclick = () => {
+                    textObject.text = text;
+                    clearInterval(interval);
+                    resolve(null);
+                };
+
+                window.onpointerdown = () => {
+                    textObject.text = text;
+                    clearInterval(interval);
+                    resolve(null);
+                };
+
+                if (i >= text.length) {
+                    clearInterval(interval);
+                    resolve(null);
+                }
+                textObject.text += text.charAt(i);
+                i++;
             }, 20);
         });
     };
@@ -301,12 +336,37 @@
 
         belmarDefault.sprite.onpointerdown = () => {
             if (!app.stage.children.includes(textboxMobile.sprite as Sprite)) {
-                fadeIn(textboxMobile.sprite as Sprite).then(() => {
+                displayTextbox(
+                    textboxMobile.sprite as Sprite,
+                    mobileText as Text
+                ).then(() => {
                     window.onpointerdown = () => {
                         fadeOut(textboxMobile.sprite as Sprite);
                         window.onpointerdown = null;
                     };
                 });
+
+                if (!belmarLook.sprite || !belmarDefault.sprite) {
+                    return;
+                }
+                belmarLook.sprite.onFrameChange = () => {
+                    // Similar to onComplete, but "completing" at frame 15. Feels more natural to end the animation there
+                    if (belmarLook.sprite?.currentFrame !== 15) return;
+
+                    if (!belmarLook.sprite || !belmarWave.sprite) {
+                        return;
+                    }
+                    belmarContainer.removeChild(belmarLook.sprite);
+                    belmarWave.sprite.gotoAndPlay(0);
+                    belmarContainer.addChild(belmarWave.sprite);
+                };
+
+                belmarContainer.removeChild(belmarDefault.sprite);
+
+                belmarLook.sprite.gotoAndPlay(0);
+                belmarContainer.addChild(belmarLook.sprite);
+
+                if (downwardsArrow.sprite) fadeOut(downwardsArrow.sprite);
             }
         };
 
@@ -314,8 +374,6 @@
             if (!belmarTransitionOut.sprite) {
                 return;
             }
-
-            canWave = true;
 
             belmarContainer.removeChild(belmarLook.sprite as AnimatedSprite);
 
@@ -326,11 +384,9 @@
         };
 
         belmarLook.sprite.onclick = () => {
-            if (!(belmarLook.sprite && belmarWave.sprite && canWave)) {
+            if (!(belmarLook.sprite && belmarWave.sprite)) {
                 return;
             }
-
-            canWave = false;
 
             belmarContainer.removeChild(belmarLook.sprite);
 
@@ -338,7 +394,7 @@
             isClickable = true;
 
             if (!app.stage.children.includes(textboxContainer)) {
-                fadeIn(textboxContainer).then(() => {
+                displayTextbox(textboxContainer, textboxText).then(() => {
                     window.onclick = () => {
                         fadeOut(textboxContainer);
                         window.onclick = null;
@@ -398,30 +454,6 @@
 
             if (downwardsArrow.sprite) fadeOut(downwardsArrow.sprite);
         };
-
-        belmarDefault.sprite.on('pointerdown', () => {
-            if (!belmarLook.sprite || !belmarDefault.sprite) {
-                return;
-            }
-            belmarLook.sprite.onFrameChange = () => {
-                // Similar to onComplete, but "completing" at frame 15. Feels more natural to end the animation there
-                if (belmarLook.sprite?.currentFrame !== 15) return;
-
-                if (!belmarLook.sprite || !belmarWave.sprite) {
-                    return;
-                }
-                belmarContainer.removeChild(belmarLook.sprite);
-                belmarWave.sprite.gotoAndPlay(0);
-                belmarContainer.addChild(belmarWave.sprite);
-            };
-
-            belmarContainer.removeChild(belmarDefault.sprite);
-
-            belmarLook.sprite.gotoAndPlay(0);
-            belmarContainer.addChild(belmarLook.sprite);
-
-            if (downwardsArrow.sprite) fadeOut(downwardsArrow.sprite);
-        });
     }
 
     // Sets up behavior of textbox, sound icons, and item box
@@ -433,7 +465,7 @@
         textboxContainer.addChild(textbox.sprite);
         textboxContainer.addChild(textboxPortrait.sprite);
 
-        const text = new Text(
+        textboxText = new Text(
             "Gah! I wasn't expecting you here \nso soon. I'm still cleaning up my \nroom, but check back in a couple \nof days.",
             {
                 fontFamily: 'o4b',
@@ -443,8 +475,8 @@
             }
         );
 
-        text.anchor.set(0, 0);
-        text.pivot.set(350, -20);
+        textboxText.anchor.set(0, 0);
+        textboxText.pivot.set(350, -20);
 
         textboxContainer.children.forEach((textboxElement) => {
             if (textboxElement instanceof Sprite) {
@@ -458,9 +490,9 @@
             }
         });
 
-        textbox.sprite.addChild(text);
+        textbox.sprite.addChild(textboxText);
 
-        const mobileText = new Text(
+        mobileText = new Text(
             "Gah! I wasn't expecting you \nso soon. I'm still cleaning \nup my room, but check back \nin a couple of days.",
             {
                 fontFamily: 'o4b',
