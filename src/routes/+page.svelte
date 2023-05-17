@@ -300,7 +300,7 @@
         belmarWave.sprite.loop = false;
 
         belmarDefault.sprite.onpointerdown = () => {
-            if (!app.stage.children.includes(textboxContainer)) {
+            if (!app.stage.children.includes(textboxMobile.sprite as Sprite)) {
                 fadeIn(textboxMobile.sprite as Sprite).then(() => {
                     window.onpointerdown = () => {
                         fadeOut(textboxMobile.sprite as Sprite);
@@ -444,9 +444,6 @@
         );
 
         text.anchor.set(0, 0);
-        /*if (text.scale.x === 1 && text.scale.y === 1) {
-            text.scale.set(scale, scale);
-        }*/
 
         textboxContainer.children.forEach((textboxElement) => {
             if (textboxElement instanceof Sprite) {
@@ -458,8 +455,6 @@
                         -(window.innerHeight - textboxContainer.height - 50)
                     );
 
-                    console.log(textbox.sprite?.width);
-
                     text.pivot.set(350, -20);
                 });
             }
@@ -469,16 +464,9 @@
 
         textboxMobile.sprite?.texture.on('update', () => {
             textboxMobile.sprite?.pivot.set(
-                (window.innerWidth - textboxMobile.sprite.width) / 2,
-                -(window.innerHeight - textboxMobile.sprite.height)
-            );
-
-            textboxMobile.sprite?.pivot.set(
-                (window.innerWidth - textboxMobile.sprite.width) /
-                    2 /
-                    textboxMobile.sprite?.scale.x,
+                (window.innerWidth - textboxMobile.sprite.width) / (2 * scale),
                 -(window.innerHeight - textboxMobile.sprite?.height - 15) /
-                    textboxMobile.sprite?.scale.y
+                    scale
             );
         });
 
