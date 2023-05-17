@@ -366,6 +366,8 @@
                 return;
             }
 
+            belmarContainer.filters = [];
+
             belmarContainer.removeChild(belmarLook.sprite);
 
             belmarWave.sprite.gotoAndPlay(0);
@@ -429,8 +431,6 @@
             belmarContainer.removeChild(belmarDefault.sprite);
             belmarLook.sprite.gotoAndPlay(0);
             belmarContainer.addChild(belmarLook.sprite);
-
-            belmarContainer.filters = [];
         };
     }
 
