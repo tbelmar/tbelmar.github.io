@@ -118,7 +118,7 @@ export let bike: AnimatedSpriteContainer = {
 export let flag: AnimatedSpriteContainer = {
     name: 'flag',
     pivot: {x: 452, y: -220},
-    playOnClick: true
+    playOnMouseover: true
 };
 
 export let knight: AnimatedSpriteContainer = {
@@ -137,33 +137,33 @@ export let steve: AnimatedSpriteContainer = {
 /*export let viola: AnimatedSpriteContainer = {
     name: 'viola',
     pivot: {x: 469, y: -117},
-    playOnClick: true
+    playOnMouseover: true
 };*/
 
 export let viola: AnimatedSpriteContainer = {
     name: 'viola',
     pivot: {x: 420, y: 610},
     rotation: (3 / 2) * Math.PI + 0.1,
-    playOnClick: true
+    playOnMouseover: true
 };
 
 export let flowerPlant: AnimatedSpriteContainer = {
     name: 'flower-plant',
     pivot: {x: -1, y: -460},
-    playOnClick: true
+    playOnMouseover: true
 };
 
 export let tallPlant: AnimatedSpriteContainer = {
     name: 'tall-plant',
     pivot: {x: 788, y: -249},
-    playOnClick: true,
+    playOnMouseover: true,
     dontAutoRender: true
 };
 
 export let shortPlant: AnimatedSpriteContainer = {
     name: 'short-plant',
     pivot: {x: 700, y: -288},
-    playOnClick: true
+    playOnMouseover: true
 };
 
 export let smallShelfPlant: AnimatedSpriteContainer = {
