@@ -10,10 +10,11 @@
         Texture,
         Text,
         type ICanvas,
-        Graphics
+        Graphics,
+        Ticker
     } from 'pixi.js';
 
-    import {GlowFilter} from 'pixi-filters';
+    import {GlowFilter, SimpleLightmapFilter} from 'pixi-filters';
 
     import Header from '$lib/components/Header.svelte';
     import {
@@ -295,14 +296,26 @@
         belmarContainer.addChild(belmarDefault.sprite);
         belmarDefault.sprite.play();
 
-        belmarContainer.filters = [
-            new GlowFilter({
-                distance: 12,
-                outerStrength: 3,
-                color: 0xffda87,
-                quality: 0.5
-            })
-        ];
+        const glow = new GlowFilter({
+            distance: 12,
+            outerStrength: 3,
+            color: 0xffda87,
+            quality: 0.5
+        });
+
+        const ticker = new Ticker();
+
+        let up = true;
+        const update = (delta: number) => {
+            glow.outerStrength += delta * 0.2 * (up ? 1 : -1);
+            if (glow.outerStrength > 20) up = false;
+            else if (glow.outerStrength < 8) up = true;
+        };
+
+        ticker.add(update);
+        ticker.start();
+
+        belmarContainer.filters = [glow];
 
         belmarDefault.sprite.interactive = true;
         belmarLook.sprite.interactive = true;
