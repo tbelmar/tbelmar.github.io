@@ -362,7 +362,11 @@
         };
 
         belmarLook.sprite.onclick = () => {
-            if (!belmarLook.sprite || !belmarWave.sprite) {
+            if (
+                !belmarLook.sprite ||
+                !belmarWave.sprite ||
+                app.stage.children.includes(textboxContainer)
+            ) {
                 return;
             }
 
