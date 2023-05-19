@@ -11,10 +11,16 @@
         Text,
         type ICanvas,
         Graphics,
-        Ticker
+        Ticker,
+        Filter
     } from 'pixi.js';
 
-    import {GlowFilter} from 'pixi-filters';
+    import {
+        BevelFilter,
+        ColorOverlayFilter,
+        GlowFilter,
+        GrayscaleFilter
+    } from 'pixi-filters';
 
     import Header from '$lib/svelte/components/Header.svelte';
     import {
@@ -88,6 +94,14 @@
 
     let scale = 1;
 
+    let colorFilter = new ColorOverlayFilter(0x000000, 0.7);
+    const glowFilter = new GlowFilter({
+        distance: 12,
+        outerStrength: 5,
+        color: 0xffda87,
+        quality: 0.5
+    });
+
     $: {
         if (canvas) {
             canvas.style!.cursor = isClickable ? 'pointer' : 'default';
@@ -97,6 +111,28 @@
     $: {
         if (itemsLoaded / totalItemsToLoad === 1) percentageText.remove();
     }
+
+    const colorDisappearTicker = new Ticker();
+
+    const updateColorFilter = (delta: number) => {
+        colorFilter.alpha -= delta * 0.1;
+        if (colorFilter.alpha < 0) {
+            colorFilter.alpha = 0;
+            colorDisappearTicker.stop();
+        }
+    };
+    colorDisappearTicker.add(updateColorFilter);
+
+    const glowDisappearTicker = new Ticker();
+
+    const updateGlowFilter = (delta: number) => {
+        glowFilter.outerStrength -= delta * 0.8;
+        if (glowFilter.outerStrength < 0) {
+            glowFilter.outerStrength = 0;
+            glowDisappearTicker.stop();
+        }
+    };
+    glowDisappearTicker.add(updateGlowFilter);
 
     // Gets a spritesheet's name and turns it into an AnimatedSprite
     async function loadAnimatedSprite(spriteSheetName: string) {
@@ -117,6 +153,8 @@
         scale = window.innerHeight / bgTexture.height;
         background.sprite.scale.set(scale, scale);
 
+        background.sprite.filters = [colorFilter];
+
         app.stage.addChild(background.sprite);
 
         for (let i = 0; i < animatedSprites.length; i++) {
@@ -126,6 +164,8 @@
                 (await loadAnimatedSprite(spriteObject.name));
 
             spriteObject.sprite = sprite;
+
+            sprite.filters = [colorFilter];
 
             sprite.animationSpeed = spriteObject.animationSpeed || 0.2;
             sprite.anchor.set(1, 0);
@@ -269,26 +309,12 @@
         belmarContainer.addChild(belmarDefault.sprite);
         belmarDefault.sprite.play();
 
-        const glow = new GlowFilter({
-            distance: 12,
-            outerStrength: 3,
-            color: 0xffda87,
-            quality: 0.5
-        });
+        belmarDefault.sprite.filters = [];
+        belmarLook.sprite.filters = [];
+        belmarTransitionOut.sprite.filters = [];
+        belmarWave.sprite.filters = [];
 
-        const ticker = new Ticker();
-
-        let up = true;
-        const update = (delta: number) => {
-            glow.outerStrength += delta * 0.2 * (up ? 1 : -1);
-            if (glow.outerStrength > 20) up = false;
-            else if (glow.outerStrength < 8) up = true;
-        };
-
-        ticker.add(update);
-        ticker.start();
-
-        belmarContainer.filters = [glow];
+        belmarContainer.filters = [glowFilter];
 
         belmarDefault.sprite.interactive = true;
         belmarLook.sprite.interactive = true;
@@ -300,6 +326,9 @@
 
         belmarDefault.sprite.onpointerdown = () => {
             if (!app.stage.children.includes(textboxMobile.sprite as Sprite)) {
+                colorDisappearTicker.start();
+                glowDisappearTicker.start();
+
                 displayTextbox(
                     textboxMobile.sprite as Sprite,
                     mobileText as Text
@@ -356,7 +385,8 @@
                 return;
             }
 
-            belmarContainer.filters = [];
+            colorDisappearTicker.start();
+            glowDisappearTicker.start();
 
             belmarContainer.removeChild(belmarLook.sprite);
 
