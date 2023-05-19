@@ -14,9 +14,9 @@
         Ticker
     } from 'pixi.js';
 
-    import {GlowFilter, SimpleLightmapFilter} from 'pixi-filters';
+    import {GlowFilter} from 'pixi-filters';
 
-    import Header from '$lib/components/Header.svelte';
+    import Header from '$lib/svelte/components/Header.svelte';
     import {
         background,
         belmarDefault,
@@ -42,7 +42,8 @@
         speakerLeft,
         speakerRight,
         lightStrip
-    } from '$lib/assets';
+    } from '$lib/assets/item-containers';
+    import {fadeIn, fadeOut} from '$lib/assets/scripts/effects';
 
     let canvas: ICanvas;
     let app: Application;
@@ -197,7 +198,7 @@
                 };
             }
 
-            if (!spriteObject.dontAutoRender) fadeIn(sprite);
+            if (!spriteObject.dontAutoRender) fadeIn(app, sprite);
             itemsLoaded++;
         }
 
@@ -221,34 +222,6 @@
         }
     }
 
-    const fadeOut = (elem: Sprite | AnimatedSprite | Container) => {
-        return new Promise((resolve) => {
-            const interval = setInterval(() => {
-                elem.alpha -= 0.1;
-                if (elem.alpha <= 0) {
-                    clearInterval(interval);
-                    app.stage.removeChild(elem);
-                    resolve(null);
-                    elem.alpha = 1;
-                }
-            }, 20);
-        });
-    };
-
-    const fadeIn = (elem: Sprite | AnimatedSprite | Container) => {
-        return new Promise((resolve) => {
-            elem.alpha = 0;
-            app.stage.addChild(elem);
-            var interval = setInterval(() => {
-                elem.alpha += 0.05;
-                if (elem.alpha >= 1) {
-                    clearInterval(interval);
-                    resolve(null);
-                }
-            }, 20);
-        });
-    };
-
     const displayTextbox = (
         container: Sprite | AnimatedSprite | Container,
         textObject: Text
@@ -256,7 +229,7 @@
         return new Promise((resolve) => {
             const text = textObject.text;
             textObject.text = '';
-            fadeIn(container);
+            fadeIn(app, container);
 
             let i = 0;
             const interval = setInterval(() => {
@@ -332,7 +305,7 @@
                     mobileText as Text
                 ).then(() => {
                     window.onpointerdown = () => {
-                        fadeOut(textboxMobile.sprite as Sprite);
+                        fadeOut(app, textboxMobile.sprite as Sprite);
                         window.onpointerdown = null;
                     };
                 });
@@ -395,13 +368,13 @@
                     (finished) => {
                         if (finished) {
                             window.onclick = () => {
-                                fadeOut(textboxContainer);
+                                fadeOut(app, textboxContainer);
                                 window.onclick = null;
                             };
                         } else {
                             setTimeout(() => {
                                 window.onclick = () => {
-                                    fadeOut(textboxContainer);
+                                    fadeOut(app, textboxContainer);
                                     window.onclick = null;
                                 };
                             }, 150);
@@ -552,11 +525,11 @@
 
         belmarContainer.mask = mask;
 
-        fadeIn(belmarContainer);
+        fadeIn(app, belmarContainer);
 
         for (const spriteObject of staticSprites) {
             if (spriteObject.sprite && !spriteObject.dontAutoRender) {
-                fadeIn(spriteObject.sprite);
+                fadeIn(app, spriteObject.sprite);
             }
         }
     }

@@ -1,5 +1,5 @@
 import {Texture, AnimatedSprite} from 'pixi.js';
-import {framesCounted} from './stores';
+import {framesCounted} from './svelte/stores';
 
 export async function loadAnimatedSprite(
     name: String,
